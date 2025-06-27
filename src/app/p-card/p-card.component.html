@@ -1,6 +1,13 @@
-<div class="w-[400px] h-[250px] bg-white dark:bg-dark rounded-lg shadow-lg">
-  <h3 class="w-[100%] bg-primary rounded-t-lg text-center text-xl p-2">PR-1</h3>
+<div
+  class="w-[350px] h-[230px] bg-white dark:bg-secondary rounded-lg shadow-lg relative overflow-hidden"
+>
+  <h3
+    class="w-full bg-primary rounded-t-lg text-center text-xl p-2 dark:bg-secondary dark:border-b dark:border-primary"
+  >
+    PR-1
+  </h3>
   <div class="px-4 py-3">
+    <!-- title and control buttons -->
     <div class="flex justify-between">
       <!-- text -->
       <div>
@@ -28,6 +35,29 @@
           <i class="text-[12px] fa-solid fa-pause"></i>
         </li>
       </ul>
+    </div>
+
+    <!-- progress bar -->
+    <div
+      class="w-full h-5 border border-primary rounded-sm mt-4 overflow-hidden"
+    >
+      <div class="w-[70%] h-5 bg-primary text-secondary flexed">70%</div>
+    </div>
+    <p class="text-sm mt-1 text-end">
+      <span class="text-primary">1</span> hr
+      <span class="text-primary">15</span> min remaining
+    </p>
+
+    <!-- progress details -->
+    <div class="absolute bottom-0 left-0 w-full px-3 py-1 flex justify-between">
+      <div class="text-green-500 flex items-center gap-1">
+        <i class="text-[8px] fa-solid fa-circle"></i>
+        <p class="text-lg">printing</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-bucket"></i>
+        <p><span class="text-primary">10</span> to collect</p>
+      </div>
     </div>
   </div>
 </div>
