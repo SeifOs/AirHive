@@ -22,7 +22,7 @@
 }
 :root.dark {
   --background-color: #594836;
-  --primary-color: #bf6b04;
+  --primary-color: #1e1914;
   --secondary-color: #41372c;
   --text-color: #fad259;
 }
@@ -41,5 +41,14 @@ body {
 @layer utilities {
   .font-pacifico {
     font-family: Pacifico, sans-serif;
+  }
+  .flexed {
+    @apply flex justify-center items-center;
+  }
+  .iconBtn {
+    @apply bg-white dark:bg-secondary dark:border-0 border-primary border-2 rounded-full p-2 w-9 h-9 hover:bg-primary cursor-pointer;
+  }
+  .textBtn {
+    @apply bg-white dark:bg-secondary dark:border-0 border-primary border-2 rounded-full px-4 h-9 hover:bg-primary cursor-pointer;
   }
 }

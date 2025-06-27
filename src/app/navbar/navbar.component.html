@@ -1,13 +1,38 @@
 <nav class="flex justify-between items-center p-5">
-  <div class="flex items-center gap-1">
+  <!-- routing to the dashboard page !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+  <div class="flex items-center gap-1 cursor-pointer">
     <img src="/logo.png" alt="logo" class="w-8" />
     <h1 class="font-pacifico">AirHive</h1>
   </div>
-  <div>
+
+  <div class="flex gap-3">
     <button
-      class="bg-white dark:bg-secondary dark:border-0 border-primary border-1 rounded-full p-2 w-8 h-8 flex justify-center items-center hover:bg-primary cursor-pointer"
+      (click)="addPrinter()"
+      title="Toggle Dark Mode"
+      class="textBtn flexed"
     >
-      <i class="fa-solid fa-moon"></i>
+      add printer
+    </button>
+
+    <button
+      (click)="toggleDarkMode()"
+      title="Toggle Dark Mode"
+      class="iconBtn flexed"
+    >
+      <i class="fa-solid fa-moon text-text"></i>
+    </button>
+
+    <button
+      (click)="toggleNotifications()"
+      title="Toggle Dark Mode"
+      class="iconBtn flexed"
+    >
+      <i class="fa-solid fa-bell"></i>
+    </button>
+
+    <!-- routing to the user center page !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+    <button title="Toggle Dark Mode" class="iconBtn flexed">
+      <i class="fa-solid fa-user"></i>
     </button>
   </div>
 </nav>
