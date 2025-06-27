@@ -1,6 +1,5 @@
 <nav class="flex justify-between items-center p-5">
-  <!-- routing to the dashboard page !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-  <div class="flex items-center gap-1 cursor-pointer">
+  <div class="flex items-center gap-1 cursor-pointer" routerLink="/dashboard">
     <img src="/logo.png" alt="logo" class="w-8" />
     <h1 class="font-pacifico">AirHive</h1>
   </div>
@@ -30,8 +29,11 @@
       <i class="fa-solid fa-bell"></i>
     </button>
 
-    <!-- routing to the user center page !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-    <button title="Toggle Dark Mode" class="iconBtn flexed">
+    <button
+      title="Toggle Dark Mode"
+      class="iconBtn flexed"
+      routerLink="/userCenter"
+    >
       <i class="fa-solid fa-user"></i>
     </button>
   </div>
