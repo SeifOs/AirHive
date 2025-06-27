@@ -1,1 +1,45 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@font-face {
+  font-family: Outfit;
+  src: url(/fonts/Outfit.ttf) format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: Pacifico;
+  src: url(/fonts/Pacifico.ttf) format("truetype");
+  font-display: swap;
+}
+:root {
+  /* font */
+  --head-font: "Pacifico";
+  /* colors */
+  --background-color: #fffaf3;
+  --primary-color: #f2b441;
+  --secondary-color: #443627;
+  --text-color: #4d3200;
+}
+:root.dark {
+  --background-color: #594836;
+  --primary-color: #bf6b04;
+  --secondary-color: #41372c;
+  --text-color: #fad259;
+}
+@theme {
+  --color-background: var(--background-color);
+  --color-primary: var(--primary-color);
+  --color-secondary: var(--secondary-color);
+  --color-text: var(--text-color);
+}
+body {
+  font-family: Outfit, sans-serif;
+  background: var(--background-color);
+  color: var(--text-color);
+  min-height: 100vh;
+}
+@layer utilities {
+  .font-pacifico {
+    font-family: Pacifico, sans-serif;
+  }
+}
