@@ -1,0 +1,301 @@
+<div class="min-h-screen p-6 bg-background">
+  <div class="grid grid-cols-1 lg:grid-cols-6 gap-6">
+    <!-- Main Console -->
+    <div class="lg:col-span-4">
+      <div
+        class="bg-white dark:bg-secondary rounded-lg border-2 shadow-sm overflow-hidden"
+        style="border-color: rgb(from var(--primary-color) r g b / 0.2)"
+      >
+        <!-- Console Header -->
+        <div
+          class="px-6 py-4 border-b"
+          style="
+            background: var(--primary-color);
+            border-color: rgb(from var(--primary-color) r g b / 0.3);
+          "
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="font-semibold">AirHive Terminal</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span>Commands: 12</span>
+              <div class="flex items-center gap-2">
+                <div
+                  class="w-2 h-2 bg-green-500 rounded-full animate-pulse"
+                ></div>
+                <span>Online</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Console Output -->
+        <div
+          class="h-96 overflow-y-auto p-4 font-mono text-sm bg-gray-900 text-green-400"
+        >
+          <!-- System Messages -->
+          <div class="mb-2">
+            <div class="flex items-start gap-2">
+              <span class="text-gray-500 text-xs min-w-20">12:30:15</span>
+              <div class="flex-1">
+                <div class="text-blue-400">
+                  AirHive Console v2.1.0 - 3D Printer Management System
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <div class="flex items-start gap-2">
+              <span class="text-gray-500 text-xs min-w-20">12:30:16</span>
+              <div class="flex-1">
+                <div class="text-blue-400">
+                  Type "help" for available commands
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sample Command History -->
+          <div class="mb-2">
+            <div class="flex items-start gap-2">
+              <span class="text-gray-500 text-xs min-w-20">12:31:20</span>
+              <div class="flex-1">
+                <div class="text-green-400">
+                  <span class="text-yellow-400">$ </span>status
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <div class="flex items-start gap-2">
+              <span class="text-gray-500 text-xs min-w-20">12:31:21</span>
+              <div class="flex-1">
+                <div class="text-white">System Status:</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <div class="flex items-start gap-2">
+              <span class="text-gray-500 text-xs min-w-20">12:31:21</span>
+              <div class="flex-1">
+                <div class="text-white">&nbsp;&nbsp;CPU Usage: 45%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <div class="flex items-start gap-2">
+              <span class="text-gray-500 text-xs min-w-20">12:31:21</span>
+              <div class="flex-1">
+                <div class="text-white">&nbsp;&nbsp;Active Printers: 3</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Current Input Line -->
+          <div class="flex items-center gap-2 mt-4">
+            <span class="text-gray-500 text-xs min-w-20">12:34:15</span>
+            <span class="text-yellow-400">$ </span>
+            <input
+              class="flex-1 bg-transparent border-none outline-none text-green-400/60"
+              placeholder="Type a command..."
+              autocomplete="off"
+            />
+            <div class="w-2 h-4 bg-green-400 animate-pulse"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Command Reference -->
+    <div class="lg:col-span-2">
+      <div
+        class="bg-white dark:bg-secondary rounded-2xl p-6 border-2 shadow-sm"
+        style="border-color: rgb(from var(--primary-color) r g b / 0.2)"
+      >
+        <h3 class="text-lg font-semibold mb-4" style="color: var(--text-color)">
+          Quick Commands
+        </h3>
+
+        <div class="space-y-3">
+          <!-- Quick Command Buttons -->
+          <button
+            class="w-full text-left p-3 rounded-lg transition-colors hover:opacity-80"
+            style="background: rgb(from var(--primary-color) r g b / 0.1)"
+          >
+            <div class="font-mono text-sm" style="color: var(--primary-color)">
+              status
+            </div>
+            <div
+              class="text-xs mt-1"
+              style="color: rgb(from var(--text-color) r g b / 0.7)"
+            >
+              Show system status
+            </div>
+          </button>
+
+          <button
+            class="w-full text-left p-3 rounded-lg transition-colors hover:opacity-80"
+            style="background: rgb(from var(--primary-color) r g b / 0.1)"
+          >
+            <div class="font-mono text-sm" style="color: var(--primary-color)">
+              printers
+            </div>
+            <div
+              class="text-xs mt-1"
+              style="color: rgb(from var(--text-color) r g b / 0.7)"
+            >
+              List all printers
+            </div>
+          </button>
+
+          <button
+            class="w-full text-left p-3 rounded-lg transition-colors hover:opacity-80"
+            style="background: rgb(from var(--primary-color) r g b / 0.1)"
+          >
+            <div class="font-mono text-sm" style="color: var(--primary-color)">
+              queue
+            </div>
+            <div
+              class="text-xs mt-1"
+              style="color: rgb(from var(--text-color) r g b / 0.7)"
+            >
+              Show print queue
+            </div>
+          </button>
+
+          <button
+            class="w-full text-left p-3 rounded-lg transition-colors hover:opacity-80"
+            style="background: rgb(from var(--primary-color) r g b / 0.1)"
+          >
+            <div class="font-mono text-sm" style="color: var(--primary-color)">
+              print &lt;file&gt;
+            </div>
+            <div
+              class="text-xs mt-1"
+              style="color: rgb(from var(--text-color) r g b / 0.7)"
+            >
+              Start print job
+            </div>
+          </button>
+
+          <button
+            class="w-full text-left p-3 rounded-lg transition-colors hover:opacity-80"
+            style="background: rgb(from var(--primary-color) r g b / 0.1)"
+          >
+            <div class="font-mono text-sm" style="color: var(--primary-color)">
+              pause &lt;id&gt;
+            </div>
+            <div
+              class="text-xs mt-1"
+              style="color: rgb(from var(--text-color) r g b / 0.7)"
+            >
+              Pause print job
+            </div>
+          </button>
+
+          <button
+            class="w-full text-left p-3 rounded-lg transition-colors hover:opacity-80"
+            style="background: rgb(from var(--primary-color) r g b / 0.1)"
+          >
+            <div class="font-mono text-sm" style="color: var(--primary-color)">
+              help
+            </div>
+            <div
+              class="text-xs mt-1"
+              style="color: rgb(from var(--text-color) r g b / 0.7)"
+            >
+              Show all commands
+            </div>
+          </button>
+        </div>
+
+        <div
+          class="mt-6 pt-6 border-t"
+          style="border-color: rgb(from var(--primary-color) r g b / 0.2)"
+        >
+          <h4 class="font-semibold mb-3" style="color: var(--text-color)">
+            System Status
+          </h4>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between">
+              <span style="color: rgb(from var(--text-color) r g b / 0.7)"
+                >CPU Usage</span
+              >
+              <span style="color: var(--text-color)">45%</span>
+            </div>
+            <div class="flex justify-between">
+              <span style="color: rgb(from var(--text-color) r g b / 0.7)"
+                >Memory</span
+              >
+              <span style="color: var(--text-color)">67%</span>
+            </div>
+            <div class="flex justify-between">
+              <span style="color: rgb(from var(--text-color) r g b / 0.7)"
+                >Active Printers</span
+              >
+              <span style="color: var(--text-color)">3</span>
+            </div>
+            <div class="flex justify-between">
+              <span style="color: rgb(from var(--text-color) r g b / 0.7)"
+                >Queue</span
+              >
+              <span style="color: var(--text-color)">5</span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="mt-6 pt-6 border-t"
+          style="border-color: rgb(from var(--primary-color) r g b / 0.2)"
+        >
+          <h4 class="font-semibold mb-3" style="color: var(--text-color)">
+            Recent Files
+          </h4>
+          <div class="space-y-2">
+            <div
+              class="text-sm p-2 rounded cursor-pointer transition-colors"
+              style="
+                color: rgb(from var(--text-color) r g b / 0.8);
+                background: rgb(from var(--primary-color) r g b / 0.05);
+              "
+            >
+              <div class="font-mono">drone-frame.stl</div>
+            </div>
+            <div
+              class="text-sm p-2 rounded cursor-pointer transition-colors"
+              style="
+                color: rgb(from var(--text-color) r g b / 0.8);
+                background: rgb(from var(--primary-color) r g b / 0.05);
+              "
+            >
+              <div class="font-mono">key-chain-v2.stl</div>
+            </div>
+            <div
+              class="text-sm p-2 rounded cursor-pointer transition-colors"
+              style="
+                color: rgb(from var(--text-color) r g b / 0.8);
+                background: rgb(from var(--primary-color) r g b / 0.05);
+              "
+            >
+              <div class="font-mono">phone-case.stl</div>
+            </div>
+            <div
+              class="text-sm p-2 rounded cursor-pointer transition-colors"
+              style="
+                color: rgb(from var(--text-color) r g b / 0.8);
+                background: rgb(from var(--primary-color) r g b / 0.05);
+              "
+            >
+              <div class="font-mono">miniature.stl</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

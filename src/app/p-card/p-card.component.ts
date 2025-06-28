@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-p-card',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './p-card.component.html',
-  styleUrl: './p-card.component.css'
+  styleUrl: './p-card.component.css',
 })
-export class PCardComponent {
-
-}
+export class PCardComponent {}
