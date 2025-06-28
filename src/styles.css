@@ -11,6 +11,9 @@
   src: url(/fonts/Pacifico.ttf) format("truetype");
   font-display: swap;
 }
+* {
+  box-sizing: border-box;
+}
 :root {
   /* font */
   --head-font: "Pacifico";
