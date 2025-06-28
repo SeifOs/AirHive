@@ -1,5 +1,5 @@
 <nav
-  class="flex justify-between items-center p-5 fixed top-0 left-0 right-0 bg-background z-50"
+  class="flex justify-between items-center p-5 fixed top-0 left-0 right-0 bg-background z-40"
 >
   <div class="flex items-center gap-1 cursor-pointer" routerLink="/dashboard">
     <img src="/logo.png" alt="logo" class="w-8" />
@@ -30,3 +30,23 @@
 </nav>
 <div class="h-20"></div>
 <!-- This div is to ensure the navbar doesn't overlap with the content -->
+<section
+  id="notifications"
+  class="bg-background border-primary border shadow-2xl fixed top-16 right-5 z-50 w-80 p-5 rounded-md dark:bg-secondary dark:border-text h-80"
+>
+  <div class="py-2">
+    <h5>Notification title</h5>
+    <p class="text-sm text-text/70">Lorem ipsum dolor sit amet.</p>
+  </div>
+  <hr class="text-text/80" />
+  <div class="py-2">
+    <h5>Notification title</h5>
+    <p class="text-sm text-text/70">Lorem ipsum dolor sit amet.</p>
+  </div>
+  <button
+    routerLink="notificationCenter"
+    class="absolute bottom-5 left-5 right-5 text-center mt-5 p-1 rounded-sm cursor-pointer hover:bg-secondary text-primary dark:text-text dark:hover:bg-text dark:hover:text-background"
+  >
+    notification center
+  </button>
+</section>
