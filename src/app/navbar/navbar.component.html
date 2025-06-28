@@ -16,7 +16,7 @@
     </button>
 
     <button
-      (click)="toggleNotifications()"
+      (click)="toggleNotifications(notifications)"
       title="Notifications"
       class="iconBtn flexed"
     >
@@ -31,7 +31,7 @@
 <div class="h-20"></div>
 <!-- This div is to ensure the navbar doesn't overlap with the content -->
 <section
-  id="notifications"
+  #notifications
   class="bg-background border-primary border shadow-2xl fixed top-16 right-5 z-50 w-80 p-5 rounded-md dark:bg-secondary dark:border-text h-80 invisible"
 >
   <div class="py-2">

@@ -11,9 +11,11 @@ import { filter } from 'rxjs/operators';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
-  toggleDarkMode() {
+  toggleDarkMode(): void {
     document.documentElement.classList.toggle('dark');
   }
 
-  toggleNotifications() {}
+  toggleNotifications(notifications: HTMLElement): void {
+    notifications.classList.toggle('invisible');
+  }
 }
