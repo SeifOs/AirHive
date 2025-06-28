@@ -8,14 +8,6 @@
 
   <div class="flex gap-3">
     <button
-      (click)="addPrinter()"
-      title="Toggle Dark Mode"
-      class="textBtn flexed"
-    >
-      add printer
-    </button>
-
-    <button
       (click)="toggleDarkMode()"
       title="Toggle Dark Mode"
       class="iconBtn flexed"
@@ -25,17 +17,13 @@
 
     <button
       (click)="toggleNotifications()"
-      title="Toggle Dark Mode"
+      title="Notifications"
       class="iconBtn flexed"
     >
       <i class="fa-solid fa-bell"></i>
     </button>
 
-    <button
-      title="Toggle Dark Mode"
-      class="iconBtn flexed"
-      routerLink="/userCenter"
-    >
+    <button title="User Center" class="iconBtn flexed" routerLink="/userCenter">
       <i class="fa-solid fa-user"></i>
     </button>
   </div>

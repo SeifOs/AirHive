@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -10,10 +13,6 @@ import { RouterLink } from '@angular/router';
 export class NavbarComponent {
   toggleDarkMode() {
     document.documentElement.classList.toggle('dark');
-  }
-
-  addPrinter() {
-    console.log('Adding printer window');
   }
 
   toggleNotifications() {

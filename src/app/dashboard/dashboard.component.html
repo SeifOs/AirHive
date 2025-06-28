@@ -1,11 +1,19 @@
 <main class="px-1 lg:px-5 mt-8">
   <div class="ml-7">
     <h2 class="text-3xl my-5">printer dashboard</h2>
-    <input
-      type="text"
-      placeholder="Search printers..."
-      class="border border-primary dark:border-text p-2 rounded-full mb-5 text-center focus:border-primary focus:dark:border-text focus:ring-0 outline-none focus:placeholder:opacity-70"
-    />
+    <div class="flex flex-wrap items-baseline gap-2">
+      <input
+        type="text"
+        placeholder="Search printers..."
+        class="border border-primary dark:border-text p-2 rounded-full text-center focus:border-primary focus:dark:border-text focus:ring-0 outline-none focus:placeholder:opacity-70"
+      />
+      <button
+        (click)="addPrinter()"
+        class="border border-primary rounded-full px-5 py-2 flexed cursor-pointer hover:bg-primary hover:text-background dark:border-text dark:hover:bg-text"
+      >
+        add printer
+      </button>
+    </div>
   </div>
   <div
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-5 xl:gap-7 w-max mx-auto my-5"
