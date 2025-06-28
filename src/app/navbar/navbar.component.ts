@@ -15,7 +15,5 @@ export class NavbarComponent {
     document.documentElement.classList.toggle('dark');
   }
 
-  toggleNotifications() {
-    console.log('Toggling notifications');
-  }
+  toggleNotifications() {}
 }
