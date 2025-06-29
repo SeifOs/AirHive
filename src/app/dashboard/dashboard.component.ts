@@ -1,15 +1,21 @@
-import { Component } from '@angular/core';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { Component, signal } from '@angular/core';
 import { PCardComponent } from '../p-card/p-card.component';
+import { NewPrinterComponent } from '../new-printer/new-printer.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [NavbarComponent, PCardComponent],
+  imports: [PCardComponent, NewPrinterComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent {
-  addPrinter() {
-    console.log('add printer');
+  isAddDeviceVisible = signal(false);
+
+  showAddDevice() {
+    this.isAddDeviceVisible.set(true);
+  }
+
+  hideAddDevice() {
+    this.isAddDeviceVisible.set(false);
   }
 }

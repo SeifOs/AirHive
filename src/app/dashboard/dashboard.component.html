@@ -8,7 +8,7 @@
         class="border border-primary dark:border-text p-2 rounded-full text-center focus:border-primary focus:dark:border-text focus:ring-0 outline-none focus:placeholder:opacity-70"
       />
       <button
-        (click)="addPrinter()"
+        (click)="showAddDevice()"
         class="border border-primary rounded-full px-5 py-2 flexed cursor-pointer hover:bg-primary hover:text-background dark:border-text dark:hover:bg-text"
       >
         add printer
@@ -16,7 +16,7 @@
     </div>
   </div>
   <div
-    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-5 xl:gap-7 w-max mx-auto my-5"
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-5 xl:gap-7 w-max mx-auto my-10"
   >
     <app-p-card></app-p-card>
     <app-p-card></app-p-card>
@@ -26,6 +26,7 @@
     <app-p-card></app-p-card>
 
     <button
+      (click)="showAddDevice()"
       class="w-[260px] h-[200px] md:w-[300px] md:h-[210px] text-primary border border-primary rounded-lg border-dashed hover:bg-primary hover:text-background cursor-pointer hover:opacity-80"
     >
       <p class="text-4xl">+</p>
@@ -33,3 +34,7 @@
     </button>
   </div>
 </main>
+
+@if (isAddDeviceVisible()) {
+<app-new-printer (close)="hideAddDevice()"></app-new-printer>
+}
