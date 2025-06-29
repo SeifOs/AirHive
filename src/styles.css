@@ -26,8 +26,8 @@
 }
 :root.dark {
   --background-color: #594836;
-  --primary-color: #bf6b04;
-  --secondary-color: #41372c;
+  --primary-color: #fad259;
+  --secondary-color: #443627;
   --text-color: #fad259;
 }
 @theme {
