@@ -31,9 +31,9 @@
       <i class="fa-solid fa-sd-card"></i>
     </button>
 
-    <!-- Add router link here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
     <button
       title="queue list"
+      (click)="showQueue.set(true)"
       routerLinkActive="text-primary"
       class="hover:text-primary cursor-pointer"
     >
@@ -50,3 +50,9 @@
     </button>
   </div>
 </section>
+
+<app-queue-list
+  [isVisible]="showQueue"
+  (visibilityChange)="showQueue.set($event)"
+>
+</app-queue-list>

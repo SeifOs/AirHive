@@ -1,1 +1,242 @@
-<p>queue-list works!</p>
+<!-- Overlay -->
+@if (isVisible()) {
+<div
+  class="fixed inset-0 bg-black/70 bg-opacity-30 z-40 transition-opacity duration-300"
+  (click)="closeQueue()"
+></div>
+}
+
+<!-- Queue Sidebar -->
+<div
+  class="fixed top-0 right-0 h-full w-96 bg-background border-l-2 border-primary transform transition-transform duration-700 z-50"
+  [class.translate-x-0]="isVisible()"
+  [class.translate-x-full]="!isVisible()"
+>
+  <!-- Header -->
+  <div class="p-6 border-b border-primary">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl text-text">Print Queue</h2>
+      <button class="iconBtn flexed" (click)="closeQueue()">
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Queue Stats -->
+    <div class="flex gap-4 text-sm">
+      <span class="bg-primary rounded-full px-3 py-1">
+        {{ getTotalJobs() }} jobs
+      </span>
+      <span
+        class="bg-white dark:bg-secondary rounded-full px-3 py-1 border border-primary"
+      >
+        {{ getActiveJobs() }} active
+      </span>
+    </div>
+  </div>
+
+  <!-- Queue Actions -->
+  <div class="p-4 border-b border-primary bg-white dark:bg-secondary">
+    <div class="flex gap-2">
+      <button class="textBtn flexed text-sm">
+        <svg
+          class="w-4 h-4 inline mr-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        Pause All
+      </button>
+      <button class="textBtn flexed text-sm">
+        <svg
+          class="w-4 h-4 inline mr-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+          />
+        </svg>
+        Clear Done
+      </button>
+    </div>
+  </div>
+
+  <!-- Queue Items -->
+  <div class="flex-1 overflow-y-auto">
+    @if (queueItems().length === 0) {
+    <div class="flexed flex-col h-64 text-center">
+      <svg
+        class="w-16 h-16 text-primary mb-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+        />
+      </svg>
+      <p class="text-text opacity-60">No jobs in queue</p>
+    </div>
+    } @else { @for (item of queueItems(); track item.id) {
+    <div
+      class="p-4 border-b border-primary border-opacity-20 hover:bg-white hover:dark:bg-secondary transition-colors"
+    >
+      <!-- Job Header -->
+      <div class="flex justify-between items-start mb-2">
+        <div class="flex-1">
+          <h3 class="font-semibold text-text truncate">{{ item.name }}</h3>
+          <p class="text-sm text-text opacity-60">{{ item.printer }}</p>
+        </div>
+
+        <!-- Status Badge -->
+        <span
+          class="px-2 py-1 rounded-full text-xs font-medium"
+          [class]="getStatusClass(item.status)"
+        >
+          {{ getStatusText(item.status) }}
+        </span>
+      </div>
+
+      <!-- Progress Bar (only for printing jobs) -->
+      @if (item.status === 'printing' && item.progress !== undefined) {
+      <div class="mb-2">
+        <div class="flex justify-between text-xs text-text opacity-60 mb-1">
+          <span>{{ item.progress }}%</span>
+          @if (item.estimatedTime) {
+          <span>{{ item.estimatedTime }} remaining</span>
+          }
+        </div>
+        <div
+          class="w-full bg-white dark:bg-secondary rounded-full h-2 border border-primary"
+        >
+          <div
+            class="bg-primary h-full rounded-full transition-all duration-300"
+            [style.width.%]="item.progress"
+          ></div>
+        </div>
+      </div>
+      }
+
+      <!-- Job Details -->
+      <div
+        class="flex justify-between items-center text-sm text-text opacity-60"
+      >
+        <span
+          >{{ item.copies }} {{ item.copies === 1 ? "copy" : "copies" }}</span
+        >
+        <span>{{ item.timeAdded }}</span>
+      </div>
+
+      <!-- Job Actions -->
+      <div class="flex gap-2 mt-3">
+        @if (item.status === 'waiting') {
+        <button class="iconBtn flexed" title="Move up">
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M7 11l5-5m0 0l5 5m-5-5v12"
+            />
+          </svg>
+        </button>
+        <button class="iconBtn flexed" title="Move down">
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 13l-5 5m0 0l-5-5m5 5V6"
+            />
+          </svg>
+        </button>
+        } @if (item.status === 'printing') {
+        <button class="iconBtn flexed" title="Pause">
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </button>
+        } @if (item.status === 'paused') {
+        <button class="iconBtn flexed" title="Resume">
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m-6-8h1m4 0h1M9 18h6"
+            />
+          </svg>
+        </button>
+        }
+
+        <button class="iconBtn flexed text-red-500" title="Cancel">
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    } }
+  </div>
+</div>
