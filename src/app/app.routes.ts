@@ -5,6 +5,7 @@ import { UserCenterComponent } from './user-center/user-center.component';
 import { ConsoleComponent } from './console/console.component';
 import { NotificationCenterComponent } from './notification-center/notification-center.component';
 import { SdCardComponent } from './sd-card/sd-card.component';
+import { PrinterPageComponent } from './printer-page/printer-page.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -25,5 +26,10 @@ export const routes: Routes = [
     title: 'AirHive - Notifications',
   },
   { path: 'sdCard', component: SdCardComponent, title: 'AirHive - SD Card' },
+  {
+    path: 'printerPage',
+    component: PrinterPageComponent,
+    title: 'AirHive - Printer',
+  },
   { path: '**', component: NotFoundComponent, title: 'Not Found' },
 ];
