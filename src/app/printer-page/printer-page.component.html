@@ -18,9 +18,146 @@
     </div>
   </div>
 
-  <div class="bg-red-500 py-6 grid grid-cols-2 gap-6">
+  <div class="py-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
     <app-air-hive-card [title]="'Tools'" class="w-full">
-      <div>test</div>
+      <div class="flexed gap-3 flex-wrap">
+        <!-- the arrow box -->
+        <div class="flex flex-col gap-2">
+          <div class="flexed">
+            <button class="toolsBtn">
+              <i class="fa-solid fa-arrow-up"></i>
+            </button>
+          </div>
+          <div class="flexed gap-2">
+            <button class="toolsBtn">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <button
+              class="w-8 h-8 border-2 border-secondary rounded-md bg-secondary text-primary cursor-pointer hover:bg-background hover:text-secondary"
+            >
+              <i class="fa-solid fa-house"></i>
+            </button>
+            <button class="toolsBtn">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+          <div class="flexed">
+            <button class="toolsBtn">
+              <i class="fa-solid fa-arrow-down"></i>
+            </button>
+          </div>
+        </div>
+        <!-- the vertical arrows -->
+        <div class="flex flex-col gap-2">
+          <div class="flex gap-2">
+            <button class="toolsBtn">
+              <i class="fa-solid fa-arrow-up"></i>
+            </button>
+            <button
+              class="border-2 h-8 w-15 border-secondary rounded-md bg-secondary text-primary cursor-pointer hover:bg-background hover:text-secondary"
+            >
+              <i class="fa-solid fa-house"></i> all
+            </button>
+          </div>
+          <div class="flex gap-2">
+            <button
+              class="w-8 h-8 border-2 border-secondary rounded-md bg-secondary text-primary cursor-pointer hover:bg-background hover:text-secondary"
+            >
+              <i class="fa-solid fa-house"></i>
+            </button>
+            <button
+              class="border-2 h-8 w-15 border-secondary rounded-md bg-secondary text-primary cursor-pointer hover:bg-background hover:text-secondary"
+            >
+              <i class="fa-solid fa-house"></i> X
+            </button>
+          </div>
+          <div class="flex gap-2">
+            <button class="toolsBtn">
+              <i class="fa-solid fa-arrow-down"></i>
+            </button>
+            <button
+              class="border-2 h-8 w-15 border-secondary rounded-md bg-secondary text-primary cursor-pointer hover:bg-background hover:text-secondary"
+            >
+              <i class="fa-solid fa-house"></i> Y
+            </button>
+          </div>
+        </div>
+        <!-- extrude section -->
+        <div class="flexed flex-col gap-3 w-70">
+          <div class="flex gap-2">
+            <label for="Email" class="relative">
+              <input
+                type="text"
+                class="peer h-11 px-2 w-full rounded border border-primary shadow-sm sm:text-sm"
+                value="250"
+                disabled
+              />
+
+              <span
+                class="absolute bg-white dark:bg-secondary left-2 w-28 -translate-y-2.5 text-center text-primary"
+              >
+                extrude length
+              </span>
+              <span class="absolute right-2 translate-y-2.5 text-primary/70"
+                >mm</span
+              >
+            </label>
+            <button
+              class="border-2 h-11 px-2 border-secondary rounded-md bg-secondary text-primary cursor-pointer hover:bg-background hover:text-secondary"
+            >
+              RETRACT
+            </button>
+          </div>
+          <div class="flex gap-2">
+            <label for="Email" class="relative">
+              <input
+                type="text"
+                class="peer h-11 px-2 w-full rounded border border-primary shadow-sm sm:text-sm"
+                value="55"
+                disabled
+              />
+
+              <span
+                class="absolute bg-white dark:bg-secondary left-2 w-28 -translate-y-2.5 text-center text-primary"
+              >
+                extrude speed
+              </span>
+              <span class="absolute right-2 translate-y-2.5 text-primary/70"
+                >mm/s</span
+              >
+            </label>
+            <button
+              class="border-2 h-11 px-2 border-secondary rounded-md bg-secondary text-primary cursor-pointer hover:bg-background hover:text-secondary"
+            >
+              EXTRUDE
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-around">
+        <div class="px-3 py-1 bg-gray-100 w-fit rounded-md flex gap-3 md:ml-3">
+          <button class="cursor-pointer text-primary hover:text-primary">
+            0.1
+          </button>
+          |
+          <button class="cursor-pointer hover:text-primary">1</button>
+          |
+          <button class="cursor-pointer hover:text-primary">10</button>
+          |
+          <button class="cursor-pointer hover:text-primary">100</button>
+        </div>
+        <div class="px-3 py-1 bg-gray-100 w-fit rounded-md flex gap-3 md:ml-3">
+          <button class="cursor-pointer text-primary hover:text-primary">
+            0.1
+          </button>
+          |
+          <button class="cursor-pointer hover:text-primary">1</button>
+          |
+          <button class="cursor-pointer hover:text-primary">10</button>
+          |
+          <button class="cursor-pointer hover:text-primary">100</button>
+        </div>
+      </div>
     </app-air-hive-card>
   </div>
 </section>

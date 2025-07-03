@@ -21,6 +21,24 @@
     class="overflow-hidden transition-all duration-300 ease-in-out"
     [class]="isExpanded() ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'"
   >
-    <div class="space-y-2 sm:space-y-3"></div>
+    <div class="space-y-2 sm:space-y-3">
+      <ng-content>
+        <div class="text-sm sm:text-base">
+          <p><span class="font-medium">Model Number:</span> AHPX-2300</p>
+          <p>
+            <span class="font-medium">Manufacturer:</span> AirHive Technologies
+          </p>
+          <p><span class="font-medium">Serial Number:</span> AHPX1-7843-1192</p>
+          <p>
+            <span class="font-medium">Status:</span> Printing (70% Complete)
+          </p>
+          <p><span class="font-medium">Current Job:</span> Cube_v2_final.stl</p>
+          <p>
+            <span class="font-medium">Material Used:</span> PLA (Polylactic
+            Acid)
+          </p>
+        </div>
+      </ng-content>
+    </div>
   </div>
 </div>
