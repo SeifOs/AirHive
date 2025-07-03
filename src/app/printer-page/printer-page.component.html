@@ -1,1 +1,26 @@
-<p>printer-page works!</p>
+<section class="w-[90%] mx-auto">
+  <h2 class="text-4xl mb-6">Printer Page</h2>
+  <div class="w-full bg-primary p-3 rounded-md text-background">
+    <p class="text-3xl">Statics</p>
+    <div class="p-3 md:flex justify-between items-center">
+      <div class="text-sm lg:text-md">
+        <p>temp: 60°C</p>
+        <p>Print Speed: 60 mm/s</p>
+        <p>Flow Rate: 95%</p>
+        <p>Layer Height: 0.2 mm</p>
+        <p>Fan Speed: 100%</p>
+      </div>
+      <div class="text-sm md:text-end lg:text-md">
+        <p>Total Print Time: 2h 00m</p>
+        <p>Elapsed Time: 1h 24m</p>
+        <p>Estimated Time Remaining: 1h 30m</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-red-500 py-6 grid grid-cols-2 gap-6">
+    <app-air-hive-card [title]="'Tools'" class="w-full">
+      <div>test</div>
+    </app-air-hive-card>
+  </div>
+</section>
