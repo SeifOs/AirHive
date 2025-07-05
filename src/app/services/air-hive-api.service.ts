@@ -7,11 +7,11 @@ import { Injectable } from '@angular/core';
 export class AirHiveApiService {
   constructor(private httpClient: HttpClient) {}
 
-  sendCommand(body: string, url: string) {
-    return this.httpClient.post(url, { body });
-  }
+  // sendCommand(body: string, url: string) {
+  //   return this.httpClient.post(url, { body });
+  // }
 
-  getData(url: string) {
-    return this.httpClient.get(url);
-  }
+  // getData(url: string) {
+  //   return this.httpClient.get(url);
+  // }
 }
