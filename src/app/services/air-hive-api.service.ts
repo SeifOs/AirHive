@@ -12,7 +12,11 @@ export class AirHiveApiService {
     return this.httpClient.post(url, { body });
   }
 
-  getData(url: string, size: number): Observable<any> {
+  getData(url: string): Observable<any> {
+    return this.httpClient.get(url);
+  }
+
+  getData_size(url: string, size: number): Observable<any> {
     const params = new HttpParams().set('size', size.toString());
 
     return this.httpClient.get(url, { params });

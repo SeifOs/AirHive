@@ -12,8 +12,16 @@ export class DashboardComponent implements OnInit {
   private readonly airHiveApiService = inject(AirHiveApiService);
 
   refreshPrinters() {
-    console.log('Refresh Printers');
-    // Logic to refresh printers can be added here
+    this.airHiveApiService
+      .getData('http://127.0.0.1:80/api/printers')
+      .subscribe({
+        next: (data) => {
+          console.log('Printers refreshed:', data);
+        },
+        error: (error) => {
+          console.error('Error refreshing printers:', error);
+        },
+      });
   }
 
   ngOnInit(): void {
