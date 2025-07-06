@@ -6,9 +6,13 @@ import { ConsoleComponent } from './console/console.component';
 import { NotificationCenterComponent } from './notification-center/notification-center.component';
 import { SdCardComponent } from './sd-card/sd-card.component';
 import { PrinterPageComponent } from './printer-page/printer-page.component';
+import { SignupPageComponent } from './signup-page/signup-page.component';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: '/signup', pathMatch: 'full' },
+  { path: 'signup', component: SignupPageComponent, title: 'AirHive - Signup' },
+  { path: 'login', component: LoginPageComponent, title: 'AirHive - Login' },
   {
     path: 'dashboard',
     component: DashboardComponent,

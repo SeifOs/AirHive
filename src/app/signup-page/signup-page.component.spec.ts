@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewPrinterComponent } from './new-printer.component';
+import { SignupPageComponent } from './signup-page.component';
 
-describe('NewPrinterComponent', () => {
-  let component: NewPrinterComponent;
-  let fixture: ComponentFixture<NewPrinterComponent>;
+describe('SignupPageComponent', () => {
+  let component: SignupPageComponent;
+  let fixture: ComponentFixture<SignupPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NewPrinterComponent]
+      imports: [SignupPageComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NewPrinterComponent);
+    fixture = TestBed.createComponent(SignupPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

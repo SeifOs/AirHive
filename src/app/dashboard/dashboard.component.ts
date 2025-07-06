@@ -1,25 +1,19 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { PCardComponent } from '../p-card/p-card.component';
-import { NewPrinterComponent } from '../new-printer/new-printer.component';
 import { AirHiveApiService } from '../services/air-hive-api.service';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [PCardComponent, NewPrinterComponent],
+  imports: [PCardComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit {
-  // private readonly airHiveApiService = inject(AirHiveApiService);
+  private readonly airHiveApiService = inject(AirHiveApiService);
 
-  isAddDeviceVisible = signal(false);
-
-  showAddDevice() {
-    this.isAddDeviceVisible.set(true);
-  }
-
-  hideAddDevice() {
-    this.isAddDeviceVisible.set(false);
+  refreshPrinters() {
+    console.log('Refresh Printers');
+    // Logic to refresh printers can be added here
   }
 
   ngOnInit(): void {
