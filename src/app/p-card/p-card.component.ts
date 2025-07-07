@@ -12,12 +12,13 @@ import { interval, Subscription } from 'rxjs';
   host: { '[attr.ngSkipHydration]': 'true' },
 })
 export class PCardComponent implements OnInit {
-  paused: boolean = false;
   private router = inject(Router);
   @Input() printer!: Printer;
   private readonly airHiveApiService = inject(AirHiveApiService);
   private subscription!: Subscription;
   progress: number = 0;
+  elapsedTime: string = '';
+  paused: boolean = this.printer.status.toLowerCase() == 'paused';
 
   goToPrinter(ip: string) {
     this.router.navigate(['/printerPage', ip]);
@@ -36,19 +37,33 @@ export class PCardComponent implements OnInit {
         },
       });
     });
+
+    this.subscription = interval(5000).subscribe(() => {
+      // get elapsed time
+      this.airHiveApiService
+        .getData('/elapsed-time/' + this.printer.ip)
+        .subscribe({
+          next: (data) => {
+            this.elapsedTime = data.elapsed_time;
+          },
+          error: (error) => {
+            console.error('Error getting elapsed time:', error);
+          },
+        });
+    });
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
   togglePause() {
-    const command = this.paused ? 'M24' : 'M25';
+    const command = this.paused ? ['M24'] : ['M25'];
     this.airHiveApiService
       .postCommands('/send-command/' + this.printer.ip, { commands: command })
       .subscribe({
         next: (res) => {
           console.log('command sent: ', res);
-          this.paused = !this.paused; // Toggle only after successful response
+          this.paused = this.printer.status.toLowerCase() == 'paused';
         },
         error: (err) => {
           console.log('error sending the command: ', err);
