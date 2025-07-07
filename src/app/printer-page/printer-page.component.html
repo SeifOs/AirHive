@@ -6,26 +6,34 @@
       <div class="text-sm lg:text-md">
         <p>extruder: {{ printer.hotend_temperature }}°C</p>
         <p>heat bed: {{ printer.heatbed_temperature }}°C</p>
-        @if (printer.status.toLowerCase() == 'printing') {
-        <div class="text-green-500 flex items-center gap-1">
-          <i class="text-[8px] fa-solid fa-circle"></i>
-          <p class="text-lg">{{ printer.status }}</p>
+        <div class="p-1 bg-background rounded-md w-fit mt-1">
+          @if (printer.status.toLowerCase() == 'printing') {
+          <div class="text-green-500 w-fit flexed gap-1">
+            <i class="text-[8px] fa-solid fa-circle"></i>
+            <p class="text-lg">{{ printer.status }}</p>
+          </div>
+          }@else if (printer.status.toLowerCase() == 'idle') {
+          <div class="text-gray-500 w-fit flexed gap-1">
+            <i class="text-[8px] fa-solid fa-circle"></i>
+            <p class="text-lg">{{ printer.status }}</p>
+          </div>
+          }@else if (printer.status.toLowerCase() == 'paused') {
+          <div class="text-yellow-500 w-fit flexed gap-1">
+            <i class="text-[8px] fa-solid fa-circle"></i>
+            <p class="text-lg">{{ printer.status }}</p>
+          </div>
+          }
         </div>
-        }@else if (printer.status.toLowerCase() == 'idle') {
-        <div class="text-gray-500 flex items-center gap-1">
-          <i class="text-[8px] fa-solid fa-circle"></i>
-          <p class="text-lg">{{ printer.status }}</p>
-        </div>
-        }@else if (printer.status.toLowerCase() == 'paused') {
-        <div class="text-yellow-500 flex items-center gap-1">
-          <i class="text-[8px] fa-solid fa-circle"></i>
-          <p class="text-lg">{{ printer.status }}</p>
-        </div>
-        }
       </div>
       @if (this.printer.status.toLowerCase() != 'idle') {
-      <div class="text-sm md:text-end lg:text-md">
-        <span class="text-primary">{{ elapsedTime }}</span> elapsed
+      <div>
+        <div>
+          <span class="text-7xl">{{ progress }}</span
+          >%
+        </div>
+        <div class="text-sm md:text-end lg:text-md">
+          {{ elapsedTime }} elapsed
+        </div>
       </div>
       }
     </div>
