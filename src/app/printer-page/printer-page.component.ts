@@ -39,7 +39,7 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = interval(3000).subscribe(() => {
       this.airHiveApiService
-        .getData('/temperature/')
+        .getData('/temperature/' + this.ip)
         .pipe(timeout(5000))
         .subscribe({
           next: (data) => {
@@ -55,7 +55,7 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
     this.subscription = interval(5000).subscribe(() => {
       // check status
       this.airHiveApiService
-        .getData('/status/' + this.printer.ip)
+        .getData('/status/' + this.ip)
         .pipe(timeout(5000))
         .subscribe({
           next: (data) => {
@@ -71,7 +71,7 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
     this.subscription = interval(1000).subscribe(() => {
       // get elapsed time
       this.airHiveApiService
-        .getData('/elapsed-time/' + this.printer.ip)
+        .getData('/elapsed-time/' + this.ip)
         .pipe(timeout(5000))
         .subscribe({
           next: (data) => {
