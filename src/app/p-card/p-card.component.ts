@@ -56,7 +56,7 @@ export class PCardComponent implements OnInit {
         '/send-command',
         `{
     "printer_ip": "${this.printer.ip}",
-    "commands": ["M25"]
+    "commands": ["M24"]
   }`
       );
       this.paused = !this.paused;

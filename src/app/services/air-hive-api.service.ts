@@ -11,6 +11,8 @@ export class AirHiveApiService {
   apiUrl: string = 'http://127.0.0.1:5000/api';
 
   postCommands(endpoint: string, body: string): Observable<any> {
+    console.log(this.apiUrl + endpoint, body);
+
     return this.httpClient.post(this.apiUrl + endpoint, body);
   }
 
