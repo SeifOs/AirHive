@@ -42,16 +42,17 @@ export class PCardComponent implements OnInit {
   }
 
   togglePause() {
-    if (this.paused) {
-      this.airHiveApiService.postCommands('/send-command/' + this.printer.ip, {
-        commands: 'M24',
+    const command = this.paused ? 'M24' : 'M25';
+    this.airHiveApiService
+      .postCommands('/send-command/' + this.printer.ip, { commands: command })
+      .subscribe({
+        next: (res) => {
+          console.log('command sent: ', res);
+          this.paused = !this.paused; // Toggle only after successful response
+        },
+        error: (err) => {
+          console.log('error sending the command: ', err);
+        },
       });
-      this.paused = !this.paused;
-    } else {
-      this.airHiveApiService.postCommands('/send-command/' + this.printer.ip, {
-        commands: 'M25',
-      });
-      this.paused = !this.paused;
-    }
   }
 }
