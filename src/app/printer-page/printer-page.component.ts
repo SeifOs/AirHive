@@ -86,4 +86,19 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
+  sendCommand(event: Event) {
+    const command = (event.target as HTMLInputElement).value;
+
+    this.airHiveApiService
+      .postCommands('/send-command/' + this.printer.ip, { commands: [command] })
+      .subscribe({
+        next: (res) => {
+          console.log('command sent: ', res);
+        },
+        error: (err) => {
+          console.log('error sending the command: ', err);
+        },
+      });
+  }
 }

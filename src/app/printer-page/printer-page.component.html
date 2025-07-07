@@ -68,7 +68,8 @@
               <input
                 class="flex-1 bg-transparent border-none outline-none text-green-400/60"
                 placeholder="Type a command..."
-                autocomplete="off"
+                (keydown.enter)="sendCommand($event)"
+                autocomplete="on"
               />
               <div class="w-2 h-4 bg-green-400 animate-pulse"></div>
             </div>
