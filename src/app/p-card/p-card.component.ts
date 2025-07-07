@@ -31,6 +31,7 @@ export class PCardComponent implements OnInit {
         next: (data) => {
           this.printer.status = data.status;
           this.progress = data.Progress;
+          this.printing = this.printer.status.toLowerCase() == 'printing';
         },
         error: (error) => {
           console.error('Error updating printer status:', error);
@@ -57,13 +58,13 @@ export class PCardComponent implements OnInit {
   }
 
   togglePause() {
-    const command = this.printing ? ['M24'] : ['M25'];
+    const command = this.printing ? ['M25'] : ['M24'];
     this.airHiveApiService
       .postCommands('/send-command/' + this.printer.ip, { commands: command })
       .subscribe({
         next: (res) => {
           console.log('command sent: ', res);
-          this.printing = this.printer.status.toLowerCase() == 'paused';
+          this.printing = this.printer.status.toLowerCase() == 'printing';
         },
         error: (err) => {
           console.log('error sending the command: ', err);
