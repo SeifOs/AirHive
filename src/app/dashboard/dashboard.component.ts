@@ -1,9 +1,9 @@
-import { interval, Subscription } from 'rxjs';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { PCardComponent } from '../p-card/p-card.component';
 import { AirHiveApiService } from '../services/air-hive-api.service';
 import { Printer } from '../interfaces/printer';
 import { nextTick } from 'process';
+import { PrintersDataService } from '../services/printers-data.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,17 +11,17 @@ import { nextTick } from 'process';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardComponent implements OnInit {
   private readonly airHiveApiService = inject(AirHiveApiService);
-  private subscription!: Subscription;
+  private readonly printersDataService = inject(PrintersDataService);
   printers: Printer[] = [];
-  progress: number[] = [];
 
   refreshPrinters() {
     this.airHiveApiService.getData('/printers').subscribe({
       next: (data) => {
         this.printers = data as Printer[];
-        console.log('Printers refreshed:', this.printers);
+        this.printersDataService.setPrinters(data as Printer[]);
+        console.log(this.printers);
       },
       error: (error) => {
         console.error('Error refreshing printers:', error);
@@ -32,28 +32,5 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Initial fetch of printers when the component is initialized
     this.refreshPrinters();
-
-    this.subscription = interval(1000).subscribe(() => {
-      this.updateProgress();
-    });
-  }
-
-  updateProgress() {
-    for (let index = 0; index < this.printers.length; index++) {
-      this.airHiveApiService
-        .getData('/print-progress/' + this.printers[index].ip)
-        .subscribe({
-          next: (data) => {
-            this.progress[index] = data.Progress;
-          },
-          error: (error) => {
-            console.error('Error refreshing printers:', error);
-          },
-        });
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 }

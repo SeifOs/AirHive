@@ -16,8 +16,7 @@
       <!-- buttons -->
       <ul class="list-none flex flex-row-reverse gap-2">
         <li
-          routerLink="/printerPage"
-          [state]="{ printer: printer }"
+          (click)="goToPrinter(printer.ip)"
           title="Printer Page"
           class="border border-primary bg-primary text-background rounded-sm w-7 h-7 flexed cursor-pointer hover:bg-background hover:text-primary"
         >
@@ -33,11 +32,22 @@
     </div>
 
     <!-- progress bar -->
+
+    @if (progress == 0) {
+    <div class="w-full h-5 bg-gray-400 text-secondary flexed">idle</div>
+    }@else {
     <div
       class="w-full h-5 border border-primary rounded-sm mt-8 overflow-hidden"
     >
-      <div class="w-[50%] h-5 bg-primary text-secondary flexed">50%</div>
+      <div
+        class="h-5 bg-primary text-secondary flexed"
+        [style.width.%]="progress"
+      >
+        {{ progress }}
+      </div>
     </div>
+    }
+
     <p class="text-sm mt-1 text-end">
       <span class="text-primary">1</span> hr
       <span class="text-primary">15</span> min remaining

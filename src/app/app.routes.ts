@@ -15,7 +15,7 @@ export const routes: Routes = [
   },
   { path: 'sdCard', component: SdCardComponent, title: 'AirHive - SD Card' },
   {
-    path: 'printerPage',
+    path: 'printerPage/:ip',
     component: PrinterPageComponent,
     title: 'AirHive - Printer',
   },
