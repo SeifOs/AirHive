@@ -1,10 +1,10 @@
-import { Printer } from './../interfaces/printer';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { AirHiveCardComponent } from '../air-hive-card/air-hive-card.component';
-import { AirHiveApiService } from '../services/air-hive-api.service';
-import { interval, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { Printer } from '../interfaces/printer';
 import { PrintersDataService } from '../services/printers-data.service';
+import { AirHiveApiService } from '../services/air-hive-api.service';
+import { interval, Subscription, timeout } from 'rxjs';
 
 @Component({
   selector: 'app-printer-page',
@@ -15,12 +15,75 @@ import { PrintersDataService } from '../services/printers-data.service';
     ngSkipHydration: 'true',
   },
 })
-export class PrinterPageComponent {
+export class PrinterPageComponent implements OnInit, OnDestroy {
+  private readonly printersDataService = inject(PrintersDataService);
+  private readonly airHiveApiService = inject(AirHiveApiService);
+  private subscription!: Subscription;
+  printer!: Printer;
+  progress: number = 0;
+  elapsedTime: string = '';
   ip: string = '';
 
   constructor(private route: ActivatedRoute) {
     this.route.paramMap.subscribe((params) => {
       this.ip = params.get('ip') || '';
+      const foundPrinter = this.printersDataService.getPrinter(this.ip);
+      if (!foundPrinter) {
+        throw new Error(`Printer with IP ${this.ip} not found.`);
+      }
+      this.printer = foundPrinter;
+      console.log(this.printer);
     });
+  }
+
+  ngOnInit(): void {
+    this.subscription = interval(3000).subscribe(() => {
+      this.airHiveApiService
+        .getData('/temperature/')
+        .pipe(timeout(5000))
+        .subscribe({
+          next: (data) => {
+            this.printer.heatbed_temperature = data.heatbed_temperature;
+            this.printer.hotend_temperature = data.hotend_temperature;
+          },
+          error: (err) => {
+            console.log('error:', err);
+          },
+        });
+    });
+
+    this.subscription = interval(5000).subscribe(() => {
+      // check status
+      this.airHiveApiService
+        .getData('/status/' + this.printer.ip)
+        .pipe(timeout(5000))
+        .subscribe({
+          next: (data) => {
+            this.printer.status = data.status;
+            this.progress = data.Progress;
+          },
+          error: (error) => {
+            console.error('Error updating printer status:', error);
+          },
+        });
+    });
+
+    this.subscription = interval(1000).subscribe(() => {
+      // get elapsed time
+      this.airHiveApiService
+        .getData('/elapsed-time/' + this.printer.ip)
+        .pipe(timeout(5000))
+        .subscribe({
+          next: (data) => {
+            this.elapsedTime = data.elapsed_time;
+          },
+          error: (error) => {
+            console.error('Error getting elapsed time:', error);
+          },
+        });
+    });
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

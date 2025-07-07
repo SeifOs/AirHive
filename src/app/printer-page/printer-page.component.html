@@ -4,17 +4,30 @@
     <p class="text-3xl">Statics</p>
     <div class="p-3 md:flex justify-between items-center">
       <div class="text-sm lg:text-md">
-        <p>extruder: 60</p>
-        <p>heat bed: 75°C</p>
-        <p>Print Speed: 60 mm/s</p>
-        <p>Flow Rate: 95%</p>
-        <p>Fan Speed: 100%</p>
+        <p>extruder: {{ printer.hotend_temperature }}°C</p>
+        <p>heat bed: {{ printer.heatbed_temperature }}°C</p>
+        @if (printer.status.toLowerCase() == 'printing') {
+        <div class="text-green-500 flex items-center gap-1">
+          <i class="text-[8px] fa-solid fa-circle"></i>
+          <p class="text-lg">{{ printer.status }}</p>
+        </div>
+        }@else if (printer.status.toLowerCase() == 'idle') {
+        <div class="text-gray-500 flex items-center gap-1">
+          <i class="text-[8px] fa-solid fa-circle"></i>
+          <p class="text-lg">{{ printer.status }}</p>
+        </div>
+        }@else if (printer.status.toLowerCase() == 'paused') {
+        <div class="text-yellow-500 flex items-center gap-1">
+          <i class="text-[8px] fa-solid fa-circle"></i>
+          <p class="text-lg">{{ printer.status }}</p>
+        </div>
+        }
       </div>
+      @if (this.printer.status.toLowerCase() != 'idle') {
       <div class="text-sm md:text-end lg:text-md">
-        <p>Total Print Time: 2h 00m</p>
-        <p>Elapsed Time: 1h 24m</p>
-        <p>Estimated Time Remaining: 1h 30m</p>
+        <span class="text-primary">{{ elapsedTime }}</span> elapsed
       </div>
+      }
     </div>
   </div>
 

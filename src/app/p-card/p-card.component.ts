@@ -2,7 +2,7 @@ import { Component, inject, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Printer } from '../interfaces/printer';
 import { AirHiveApiService } from '../services/air-hive-api.service';
-import { interval, Subscription } from 'rxjs';
+import { interval, Subscription, timeout } from 'rxjs';
 
 @Component({
   selector: 'app-p-card',
@@ -27,22 +27,26 @@ export class PCardComponent implements OnInit {
   ngOnInit(): void {
     this.subscription = interval(3000).subscribe(() => {
       // check status
-      this.airHiveApiService.getData('/status/' + this.printer.ip).subscribe({
-        next: (data) => {
-          this.printer.status = data.status;
-          this.progress = data.Progress;
-          this.printing = this.printer.status.toLowerCase() == 'printing';
-        },
-        error: (error) => {
-          console.error('Error updating printer status:', error);
-        },
-      });
+      this.airHiveApiService
+        .getData('/status/' + this.printer.ip)
+        .pipe(timeout(5000))
+        .subscribe({
+          next: (data) => {
+            this.printer.status = data.status;
+            this.progress = data.Progress;
+            this.printing = this.printer.status.toLowerCase() == 'printing';
+          },
+          error: (error) => {
+            console.error('Error updating printer status:', error);
+          },
+        });
     });
 
-    this.subscription = interval(5000).subscribe(() => {
+    this.subscription = interval(1000).subscribe(() => {
       // get elapsed time
       this.airHiveApiService
         .getData('/elapsed-time/' + this.printer.ip)
+        .pipe(timeout(5000))
         .subscribe({
           next: (data) => {
             this.elapsedTime = data.elapsed_time;

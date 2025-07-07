@@ -67,11 +67,11 @@
         {{ progress }}%
       </div>
     </div>
-    }
-
+    } @if (this.printer.status.toLowerCase() != 'idle') {
     <p class="text-sm mt-1 text-end">
-      <span class="text-primary">{{ elapsedTime }}</span> remaining
+      <span class="text-primary">{{ elapsedTime }}</span> elapsed
     </p>
+    }
 
     <!-- progress details -->
     <div class="absolute bottom-0 left-0 w-full px-3 py-1">
