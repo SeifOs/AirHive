@@ -44,12 +44,12 @@ export class PCardComponent implements OnInit {
   togglePause() {
     if (this.paused) {
       this.airHiveApiService.postCommands('/send-command/' + this.printer.ip, {
-        commands: ['M24'],
+        commands: 'M24',
       });
       this.paused = !this.paused;
     } else {
       this.airHiveApiService.postCommands('/send-command/' + this.printer.ip, {
-        commands: ['M25'],
+        commands: 'M25',
       });
       this.paused = !this.paused;
     }
