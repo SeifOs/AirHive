@@ -43,22 +43,14 @@ export class PCardComponent implements OnInit {
 
   togglePause() {
     if (this.paused) {
-      this.airHiveApiService.postCommands(
-        '/send-command',
-        `{
-    "printer_ip": "${this.printer.ip}",
-    "commands": ["M25"]
-  }`
-      );
+      this.airHiveApiService.postCommands('/send-command/' + this.printer.ip, {
+        commands: ['M24'],
+      });
       this.paused = !this.paused;
     } else {
-      this.airHiveApiService.postCommands(
-        '/send-command',
-        `{
-    "printer_ip": "${this.printer.ip}",
-    "commands": ["M24"]
-  }`
-      );
+      this.airHiveApiService.postCommands('/send-command/' + this.printer.ip, {
+        commands: ['M25'],
+      });
       this.paused = !this.paused;
     }
   }
