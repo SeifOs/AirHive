@@ -15,9 +15,14 @@
       </button>
     </div>
   </div>
+
+  @for (printer of printers; track printer.ip) {
   <div
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-5 xl:gap-7 w-max mx-auto my-10"
   >
-    <app-p-card></app-p-card>
+    <app-p-card [printer]="printer"></app-p-card>
   </div>
+  }@empty {
+  <p class="text-center text-3xl mt-32">No printers found.</p>
+  }
 </main>

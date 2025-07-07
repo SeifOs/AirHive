@@ -1,6 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { interval, Subscription } from 'rxjs';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { PCardComponent } from '../p-card/p-card.component';
 import { AirHiveApiService } from '../services/air-hive-api.service';
+import { Printer } from '../interfaces/printer';
+import { nextTick } from 'process';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,40 +11,49 @@ import { AirHiveApiService } from '../services/air-hive-api.service';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   private readonly airHiveApiService = inject(AirHiveApiService);
+  private subscription!: Subscription;
+  printers: Printer[] = [];
+  progress: number[] = [];
 
   refreshPrinters() {
-    this.airHiveApiService
-      .getData('http://127.0.0.1:80/api/printers')
-      .subscribe({
-        next: (data) => {
-          console.log('Printers refreshed:', data);
-        },
-        error: (error) => {
-          console.error('Error refreshing printers:', error);
-        },
-      });
+    this.airHiveApiService.getData('/printers').subscribe({
+      next: (data) => {
+        this.printers = data as Printer[];
+        console.log('Printers refreshed:', this.printers);
+      },
+      error: (error) => {
+        console.error('Error refreshing printers:', error);
+      },
+    });
   }
 
   ngOnInit(): void {
-    // this.airHiveApiService
-    //   .sendCommand('url here !!!', 'command here !!!')
-    //   .subscribe({
-    //     next: (response) => {
-    //       console.log('Command sent successfully:', response);
-    //     },
-    //     error: (error) => {
-    //       console.error('Error sending command:', error);
-    //     },
-    //   });
-    // this.airHiveApiService.getData('url here !!!').subscribe({
-    //   next: (data) => {
-    //     console.log('Data received:', data);
-    //   },
-    //   error: (error) => {
-    //     console.error('Error fetching data:', error);
-    //   },
-    // });
+    // Initial fetch of printers when the component is initialized
+    this.refreshPrinters();
+
+    this.subscription = interval(1000).subscribe(() => {
+      this.updateProgress();
+    });
+  }
+
+  updateProgress() {
+    for (let index = 0; index < this.printers.length; index++) {
+      this.airHiveApiService
+        .getData('/print-progress/' + this.printers[index].ip)
+        .subscribe({
+          next: (data) => {
+            this.progress[index] = data.Progress;
+          },
+          error: (error) => {
+            console.error('Error refreshing printers:', error);
+          },
+        });
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

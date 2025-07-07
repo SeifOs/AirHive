@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -9,23 +9,7 @@ import { RouterLink } from '@angular/router';
   host: { '[attr.ngSkipHydration]': 'true' },
 })
 export class NavbarComponent {
-  notificationsHidden = true;
-
   toggleDarkMode(): void {
     document.documentElement.classList.toggle('dark');
-  }
-
-  toggleNotifications(): void {
-    this.notificationsHidden = !this.notificationsHidden;
-  }
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    this.notificationsHidden = true;
-  }
-
-  @HostListener('document:keydown.escape')
-  onEscape() {
-    this.notificationsHidden = true;
   }
 }

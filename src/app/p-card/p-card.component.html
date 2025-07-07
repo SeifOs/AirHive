@@ -4,7 +4,7 @@
   <h3
     class="w-full bg-primary rounded-t-lg text-center text-xl p-2 dark:bg-secondary dark:border-b dark:border-primary"
   >
-    PR-1
+    {{ printer.name }}
   </h3>
   <div class="px-4 py-3">
     <!-- title and control buttons -->
@@ -12,26 +12,16 @@
       <!-- text -->
       <div>
         <h4 class="text-xl">drone frame</h4>
-        <p class="text-sm">
-          <span class="text-primary">1</span> of
-          <span class="text-primary">2</span>
-        </p>
       </div>
       <!-- buttons -->
       <ul class="list-none flex flex-row-reverse gap-2">
         <li
           routerLink="/printerPage"
+          [state]="{ printer: printer }"
           title="Printer Page"
           class="border border-primary bg-primary text-background rounded-sm w-7 h-7 flexed cursor-pointer hover:bg-background hover:text-primary"
         >
-          <i class="text-[12px] fa-solid fa-gear"></i>
-        </li>
-        <li
-          class="border border-primary text-primary rounded-sm w-7 h-7 flexed cursor-pointer hover:bg-primary hover:text-background"
-          routerLink="/console"
-          title="Console"
-        >
-          <i class="text-[12px] fa-solid fa-terminal"></i>
+          <i class="fa-solid fa-print"></i>
         </li>
         <li
           title="Pause"
@@ -44,9 +34,9 @@
 
     <!-- progress bar -->
     <div
-      class="w-full h-5 border border-primary rounded-sm mt-3 overflow-hidden"
+      class="w-full h-5 border border-primary rounded-sm mt-8 overflow-hidden"
     >
-      <div class="w-[70%] h-5 bg-primary text-secondary flexed">70%</div>
+      <div class="w-[50%] h-5 bg-primary text-secondary flexed">50%</div>
     </div>
     <p class="text-sm mt-1 text-end">
       <span class="text-primary">1</span> hr
@@ -54,15 +44,23 @@
     </p>
 
     <!-- progress details -->
-    <div class="absolute bottom-0 left-0 w-full px-3 py-1 flex justify-between">
+    <div class="absolute bottom-0 left-0 w-full px-3 py-1">
+      @if (printer.status.toLowerCase() == 'printing') {
       <div class="text-green-500 flex items-center gap-1">
         <i class="text-[8px] fa-solid fa-circle"></i>
-        <p class="text-lg">printing</p>
+        <p class="text-lg">{{ printer.status }}</p>
       </div>
-      <div class="flex items-center gap-2">
-        <i class="fa-solid fa-bucket"></i>
-        <p><span class="text-primary">10</span> to collect</p>
+      }@else if (printer.status.toLowerCase() == 'idle') {
+      <div class="text-gray-500 flex items-center gap-1">
+        <i class="text-[8px] fa-solid fa-circle"></i>
+        <p class="text-lg">{{ printer.status }}</p>
       </div>
+      }@else if (printer.status.toLowerCase() == 'paused') {
+      <div class="text-yellow-500 flex items-center gap-1">
+        <i class="text-[8px] fa-solid fa-circle"></i>
+        <p class="text-lg">{{ printer.status }}</p>
+      </div>
+      }
     </div>
   </div>
 </div>

@@ -8,17 +8,19 @@ import { Observable } from 'rxjs';
 export class AirHiveApiService {
   constructor(private httpClient: HttpClient) {}
 
-  sendCommand(url: string, body: string): Observable<any> {
-    return this.httpClient.post(url, { body });
+  apiUrl: string = 'http://127.0.0.1:5000/api';
+
+  postCommands(endpoint: string, body: string): Observable<any> {
+    return this.httpClient.post(this.apiUrl + endpoint, body);
   }
 
-  getData(url: string): Observable<any> {
-    return this.httpClient.get(url);
+  getData(endpoint: string): Observable<any> {
+    return this.httpClient.get(this.apiUrl + endpoint);
   }
 
-  getData_size(url: string, size: number): Observable<any> {
+  getData_size(endpoint: string, size: number): Observable<any> {
     const params = new HttpParams().set('size', size.toString());
 
-    return this.httpClient.get(url, { params });
+    return this.httpClient.get(this.apiUrl + endpoint, { params });
   }
 }
