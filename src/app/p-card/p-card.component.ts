@@ -12,6 +12,7 @@ import { interval, Subscription } from 'rxjs';
   host: { '[attr.ngSkipHydration]': 'true' },
 })
 export class PCardComponent implements OnInit {
+  paused: boolean = false;
   private router = inject(Router);
   @Input() printer!: Printer;
   private readonly airHiveApiService = inject(AirHiveApiService);
@@ -23,28 +24,17 @@ export class PCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subscription = interval(1000).subscribe(() => {
+    this.subscription = interval(3000).subscribe(() => {
       // check status
       this.airHiveApiService.getData('/status/' + this.printer.ip).subscribe({
         next: (data) => {
           this.printer.status = data.status;
+          this.progress = data.Progress;
         },
         error: (error) => {
           console.error('Error updating printer status:', error);
         },
       });
-
-      // check progress
-      this.airHiveApiService
-        .getData('/print-progress/' + this.printer.ip)
-        .subscribe({
-          next: (data) => {
-            this.progress = data.Progress;
-          },
-          error: (error) => {
-            console.error('Error updating printer status:', error);
-          },
-        });
     });
   }
   ngOnDestroy(): void {
