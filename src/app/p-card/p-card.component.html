@@ -25,6 +25,7 @@
         @if (printer.status.toLowerCase() != 'idle') { @if (paused) {
         <li
           title="Play"
+          (click)="togglePause()"
           class="border border-primary text-primary rounded-sm w-7 h-7 flexed cursor-pointer hover:bg-primary hover:text-background"
         >
           <i class="text-[12px] fa-solid fa-play"></i>
@@ -32,6 +33,7 @@
         } @else {
         <li
           title="Pause"
+          (click)="togglePause()"
           class="border border-primary text-primary rounded-sm w-7 h-7 flexed cursor-pointer hover:bg-primary hover:text-background"
         >
           <i class="text-[12px] fa-solid fa-pause"></i>
