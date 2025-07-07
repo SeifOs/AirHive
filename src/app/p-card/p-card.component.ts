@@ -18,7 +18,7 @@ export class PCardComponent implements OnInit {
   private subscription!: Subscription;
   progress: number = 0;
   elapsedTime: string = '';
-  paused: boolean = this.printer.status.toLowerCase() == 'paused';
+  paused: boolean = false;
 
   goToPrinter(ip: string) {
     this.router.navigate(['/printerPage', ip]);
