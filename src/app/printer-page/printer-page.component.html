@@ -268,7 +268,9 @@
     <!-- files -->
     <app-air-hive-card [title]="'Files'">
       <div class="flex flex-col justify-center gap-2">
-        <div class="bg-gray-200 h-80 rounded-lg p-5 dark:bg-background">
+        <div
+          class="bg-gray-200 h-80 rounded-lg p-5 dark:bg-background overflow-y-auto"
+        >
           @for (file of files; track $index) {
           <div
             class="border-b border-gray-300 dark:border-black/20 p-2 flex justify-between items-center"
@@ -297,6 +299,7 @@
 
         <div class="flexed gap-2">
           <button
+            (click)="refreshFiles()"
             class="text-center cursor-pointer py-1 px-2 bg-primary rounded-md self-center border-2 border-primary hover:bg-transparent hover:text-primary dark:text-secondary"
           >
             refresh files

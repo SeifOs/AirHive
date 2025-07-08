@@ -46,6 +46,8 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.refreshFiles();
+
     this.subscription = interval(3000).subscribe(() => {
       this.airHiveApiService
         .getData('/temperature/' + this.ip)
