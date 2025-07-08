@@ -183,6 +183,23 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
         },
       });
   }
+  deleteFile(index: number) {
+    this.airHiveApiService
+      .postCommands('/delete-file/' + this.ip, {
+        filename: this.files[index],
+      })
+      .subscribe({
+        next: () => {
+          console.log(
+            'delete command sent, deleting file: ',
+            this.files[index]
+          );
+        },
+        error: () => {
+          console.log('error deleting file: ', this.files[index]);
+        },
+      });
+  }
   homePrinter(axies: string[]) {
     this.airHiveApiService
       .postCommands('/home/' + this.ip, {
@@ -252,7 +269,6 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
   triggerFileInput() {
     this.fileInput().nativeElement.click();
   }
-
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -260,8 +276,8 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
       this.uploadFile(file);
     }
   }
-
   uploadFile(uploadFile: File) {
+    this.files.push(uploadFile.name);
     this.isUploading = true;
     this.uploadStatus = null;
 

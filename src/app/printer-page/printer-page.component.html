@@ -381,11 +381,12 @@
               >
                 print
               </button>
-              <!-- <button
+              <button
                 class="p-1 cursor-pointer text-black border-2 hover:text-red-500 border-red-500 hover:bg-transparent bg-red-500 rounded-md"
+                (click)="deleteFile($index)"
               >
                 delete
-              </button> -->
+              </button>
             </div>
           </div>
           }@empty {
