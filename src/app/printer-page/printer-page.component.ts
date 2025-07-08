@@ -139,9 +139,7 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
       .pipe(timeout(5000))
       .subscribe({
         next: (data) => {
-          for (let index = 0; index < data.sdcard_files.length; index++) {
-            this.files[index] += data.sdcard_files[index];
-          }
+          this.files = data.sdcard_files;
         },
         error: (error) => {
           console.error('Error getting sd card files:', error);
