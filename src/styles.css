@@ -57,7 +57,10 @@ body {
     @apply bg-white dark:hover:text-background dark:bg-secondary dark:border-0 border-primary border-2 rounded-full px-4 h-9 hover:bg-primary cursor-pointer;
   }
   .toolsBtn {
-    @apply w-8 h-8 border-2 border-primary rounded-md bg-primary cursor-pointer hover:bg-background;
+    @apply w-8 h-8 border-2 border-primary rounded-md bg-primary cursor-pointer hover:bg-transparent dark:text-secondary dark:hover:text-primary;
+  }
+  .activeBarBtn {
+    @apply cursor-pointer text-primary hover:text-primary px-1 rounded-sm dark:bg-primary dark:text-secondary dark:hover:text-secondary;
   }
 }
 

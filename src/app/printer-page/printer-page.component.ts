@@ -46,70 +46,66 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.refreshFiles();
-
-    this.subscription = interval(3000).subscribe(() => {
-      this.airHiveApiService
-        .getData('/temperature/' + this.ip)
-        .pipe(timeout(5000))
-        .subscribe({
-          next: (data) => {
-            this.printer.heatbed_temperature = data.heatbed_temperature;
-            this.printer.hotend_temperature = data.hotend_temperature;
-          },
-          error: (err) => {
-            console.log('error:', err);
-          },
-        });
-    });
-
-    this.subscription = interval(5000).subscribe(() => {
-      // check status
-      this.airHiveApiService
-        .getData('/status/' + this.ip)
-        .pipe(timeout(5000))
-        .subscribe({
-          next: (data) => {
-            this.printer.status = data.status;
-            this.progress = data.Progress;
-          },
-          error: (error) => {
-            console.error('Error updating printer status:', error);
-          },
-        });
-    });
-
-    this.subscription = interval(1000).subscribe(() => {
-      // get elapsed time
-      this.airHiveApiService
-        .getData('/elapsed-time/' + this.ip)
-        .pipe(timeout(5000))
-        .subscribe({
-          next: (data) => {
-            this.elapsedTime = data.elapsed_time;
-          },
-          error: (error) => {
-            console.error('Error getting elapsed time:', error);
-          },
-        });
-    });
-
-    this.subscription = interval(3000).subscribe(() => {
-      // get elapsed time
-      this.airHiveApiService
-        .getData('/raw-responses/' + this.ip)
-        .pipe(timeout(5000))
-        .subscribe({
-          next: (data) => {
-            for (let index = 0; index < data.raw_responses.length; index++) {
-              this.consoleScreen.nativeElement.innerHTML += `<p>${data.raw_responses[index]}</p>`;
-            }
-          },
-          error: (error) => {
-            console.error('Error getting elapsed time:', error);
-          },
-        });
-    });
+    // this.refreshFiles();
+    // this.subscription = interval(3000).subscribe(() => {
+    //   this.airHiveApiService
+    //     .getData('/temperature/' + this.ip)
+    //     .pipe(timeout(5000))
+    //     .subscribe({
+    //       next: (data) => {
+    //         this.printer.heatbed_temperature = data.heatbed_temperature;
+    //         this.printer.hotend_temperature = data.hotend_temperature;
+    //       },
+    //       error: (err) => {
+    //         console.log('error:', err);
+    //       },
+    //     });
+    // });
+    // this.subscription = interval(5000).subscribe(() => {
+    //   // check status
+    //   this.airHiveApiService
+    //     .getData('/status/' + this.ip)
+    //     .pipe(timeout(5000))
+    //     .subscribe({
+    //       next: (data) => {
+    //         this.printer.status = data.status;
+    //         this.progress = data.Progress;
+    //       },
+    //       error: (error) => {
+    //         console.error('Error updating printer status:', error);
+    //       },
+    //     });
+    // });
+    // this.subscription = interval(1000).subscribe(() => {
+    //   // get elapsed time
+    //   this.airHiveApiService
+    //     .getData('/elapsed-time/' + this.ip)
+    //     .pipe(timeout(5000))
+    //     .subscribe({
+    //       next: (data) => {
+    //         this.elapsedTime = data.elapsed_time;
+    //       },
+    //       error: (error) => {
+    //         console.error('Error getting elapsed time:', error);
+    //       },
+    //     });
+    // });
+    // this.subscription = interval(3000).subscribe(() => {
+    //   // get elapsed time
+    //   this.airHiveApiService
+    //     .getData('/raw-responses/' + this.ip)
+    //     .pipe(timeout(5000))
+    //     .subscribe({
+    //       next: (data) => {
+    //         for (let index = 0; index < data.raw_responses.length; index++) {
+    //           this.consoleScreen.nativeElement.innerHTML += `<p>${data.raw_responses[index]}</p>`;
+    //         }
+    //       },
+    //       error: (error) => {
+    //         console.error('Error getting elapsed time:', error);
+    //       },
+    //     });
+    // });
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -129,8 +125,7 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
         },
       });
     (event.target as HTMLInputElement).value = '';
-    this.consoleScreen.nativeElement.innerHTML +=
-      '<p class="mt-2">command sent</p>';
+    this.consoleScreen.nativeElement.innerHTML += `<p class="mt-2">command ${command} sent</p>`;
   }
 
   refreshFiles() {
@@ -159,5 +154,22 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
           console.log('error printing file: ', this.files[index]);
         },
       });
+  }
+  homePrinter(axies: string[]) {
+    this.airHiveApiService
+      .postCommands('/home/' + this.ip, {
+        'axis-to-home': axies,
+      })
+      .subscribe({
+        next: (res) => {
+          console.log('welcome home', res);
+        },
+        error: (err) => {
+          console.log('welcome home', err);
+        },
+      });
+  }
+  motorOff() {
+    this.airHiveApiService.postCommands('/disable-motors/' + this.ip, {});
   }
 }
