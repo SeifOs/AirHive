@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AirHiveCardComponent } from '../air-hive-card/air-hive-card.component';
 import { ActivatedRoute } from '@angular/router';
 import { Printer } from '../interfaces/printer';
@@ -19,6 +19,7 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
   private readonly printersDataService = inject(PrintersDataService);
   private readonly airHiveApiService = inject(AirHiveApiService);
   private subscription!: Subscription;
+  @ViewChild('el') consoleScreen!: HTMLDivElement;
   printer!: Printer;
   progress: number = 0;
   elapsedTime: string = '';
@@ -82,6 +83,21 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
           },
         });
     });
+
+    this.subscription = interval(3000).subscribe(() => {
+      // get elapsed time
+      this.airHiveApiService
+        .getData('/raw-responses/' + this.ip)
+        .pipe(timeout(5000))
+        .subscribe({
+          next: (data) => {
+            this.consoleScreen.innerHTML += data.raw_responses;
+          },
+          error: (error) => {
+            console.error('Error getting elapsed time:', error);
+          },
+        });
+    });
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -94,11 +110,13 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
       .postCommands('/send-command/' + this.printer.ip, { commands: [command] })
       .subscribe({
         next: (res) => {
-          console.log('command sent: ', res);
+          console.log(`command ${command} sent with no problems`);
         },
         error: (err) => {
           console.log('error sending the command: ', err);
         },
       });
+    (event.target as HTMLInputElement).value = '';
+    this.consoleScreen.innerHTML += '<p class="mt-2">command sent</p>';
   }
 }
