@@ -54,8 +54,6 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.refreshFiles();
-
     this.subscription = interval(5000).subscribe(() => {
       this.airHiveApiService
         .getData('/temperature/' + this.ip)
@@ -69,6 +67,8 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
             console.log('error:', err);
           },
         });
+
+      this.refreshFiles();
     });
     this.subscription = interval(5000).subscribe(() => {
       // check status
@@ -199,6 +199,7 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
           console.log('error deleting file: ', this.files[index]);
         },
       });
+    this.refreshFiles();
   }
   homePrinter(axies: string[]) {
     this.airHiveApiService
