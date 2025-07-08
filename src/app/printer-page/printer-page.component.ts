@@ -256,31 +256,25 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
-      const filename = file.name;
-      const filepath = event.target.value;
-
       // Start upload immediately after file selection
-      this.uploadFile(filename, filepath);
+      this.uploadFile(file);
     }
   }
 
-  uploadFile(uploadFilename: string, uploadFilepath: string) {
+  uploadFile(uploadFile: File) {
     this.isUploading = true;
     this.uploadStatus = null;
 
-    console.log(uploadFilename, uploadFilepath);
-
     this.airHiveApiService
-      .postCommands('/upload-to-sdcard/' + this.ip, {
-        filename: uploadFilename,
-        filepath: uploadFilepath,
+      .postCommands('/upload-file/' + this.ip, {
+        file: uploadFile,
       })
       .subscribe({
         next: (response) => {
           console.log('Upload successful', response);
           this.isUploading = false;
           this.uploadStatus = 'success';
-          this.uploadMessage = `File "${uploadFilename}" uploaded successfully!`;
+          this.uploadMessage = `File uploaded successfully!`;
           this.resetFileInput();
         },
         error: (error) => {
