@@ -8,8 +8,8 @@
           <p>Extruder: {{ printer.hotend_temperature }}°C /</p>
           <label for="text" class="relative">
             <input
-              type="number"
-              class="ml-1 peer p-1 w-16 rounded-sm bg-background sm:text-sm outline-0 text-secondary dark:text-primary"
+              type="text"
+              class="no-spinner ml-1 peer p-1 w-16 rounded-sm bg-background sm:text-sm outline-0 text-secondary dark:text-primary"
               value="0"
               (keydown.enter)="editHeat('hotend', $event)"
             />
@@ -24,8 +24,8 @@
           <p>Heat bed: {{ printer.heatbed_temperature }}°C /</p>
           <label for="text" class="relative">
             <input
-              type="number"
-              class="ml-1 peer p-1 w-16 rounded-sm bg-background sm:text-sm outline-0 text-secondary dark:text-primary"
+              type="text"
+              class="no-spinner ml-1 peer p-1 w-16 rounded-sm bg-background sm:text-sm outline-0 text-secondary dark:text-primary"
               value="0"
               (keydown.enter)="editHeat('bed', $event)"
             />

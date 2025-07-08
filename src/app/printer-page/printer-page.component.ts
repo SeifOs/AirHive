@@ -147,6 +147,8 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
       });
     (event.target as HTMLInputElement).value = '';
     this.consoleScreen.nativeElement.innerHTML += `<p class="mt-2">command ${command} sent</p>`;
+    this.consoleScreen.nativeElement.scrollTop =
+      this.consoleScreen.nativeElement.scrollHeight;
   }
 
   refreshFiles() {
