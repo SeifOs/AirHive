@@ -47,6 +47,7 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.refreshFiles();
+
     this.subscription = interval(5000).subscribe(() => {
       this.airHiveApiService
         .getData('/temperature/' + this.ip)
@@ -103,6 +104,23 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
           },
           error: (error) => {
             console.error('Error getting elapsed time:', error);
+          },
+        });
+    });
+    this.subscription = interval(5000).subscribe(() => {
+      // get coordinates
+      this.airHiveApiService
+        .getData('/axis-coordinates/' + this.ip)
+        .pipe(timeout(5000))
+        .subscribe({
+          next: (data) => {
+            this.printer.x_coordinate = data.X;
+            this.printer.y_coordinate = data.Y;
+            this.printer.z_coordinate = data.Z;
+            this.printer.e_coordinate = data.E;
+          },
+          error: (error) => {
+            console.error('Error getting coordinates:', error);
           },
         });
     });
