@@ -12,10 +12,11 @@ import { Printer } from '../interfaces/printer';
 import { PrintersDataService } from '../services/printers-data.service';
 import { AirHiveApiService } from '../services/air-hive-api.service';
 import { interval, Subscription, timeout } from 'rxjs';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-printer-page',
-  imports: [AirHiveCardComponent],
+  imports: [AirHiveCardComponent, NgClass],
   templateUrl: './printer-page.component.html',
   styleUrl: './printer-page.component.css',
   host: {
@@ -27,6 +28,8 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
   private readonly airHiveApiService = inject(AirHiveApiService);
   private subscription!: Subscription;
   @ViewChild('el') consoleScreen!: ElementRef;
+  xyzPrecision: number = 0.1;
+  ePrecision: number = 0.1;
   printer!: Printer;
   files: string[] = [];
   progress: number = 0;
@@ -196,6 +199,29 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.log('error: ', err);
+        },
+      });
+  }
+  update_xyzPrecision(value: number) {
+    this.xyzPrecision = value;
+  }
+  update_ePrecision(value: number) {
+    this.ePrecision = value;
+  }
+  moveCoordinate(newC: number[]) {
+    this.airHiveApiService
+      .postCommands('/move_axis/' + this.ip, {
+        x_distance: newC[0] * this.xyzPrecision,
+        y_distance: newC[1] * this.xyzPrecision,
+        z_distance: newC[2] * this.xyzPrecision,
+        e_distance: newC[3] * this.ePrecision,
+      })
+      .subscribe({
+        next: (res) => {
+          console.log('update coordinates: ', res);
+        },
+        error: (err) => {
+          console.log('update coordinates: ', err);
         },
       });
   }

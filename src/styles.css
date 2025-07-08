@@ -43,6 +43,9 @@ body {
   min-height: 100vh;
   /* overflow-y: scroll; Always reserve space for scrollbar */
 }
+button {
+  cursor: pointer;
+}
 @layer utilities {
   .font-pacifico {
     font-family: Pacifico, sans-serif;

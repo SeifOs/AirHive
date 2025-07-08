@@ -75,12 +75,12 @@
           <!-- the arrow box -->
           <div class="flex flex-col gap-2">
             <div class="flexed">
-              <button class="toolsBtn">
+              <button class="toolsBtn" (click)="moveCoordinate([0, 1, 0, 0])">
                 <i class="fa-solid fa-arrow-up"></i>
               </button>
             </div>
             <div class="flexed gap-2">
-              <button class="toolsBtn">
+              <button class="toolsBtn" (click)="moveCoordinate([-1, 0, 0, 0])">
                 <i class="fa-solid fa-arrow-left"></i>
               </button>
               <button
@@ -89,12 +89,12 @@
               >
                 <i class="fa-solid fa-house"></i>
               </button>
-              <button class="toolsBtn">
+              <button class="toolsBtn" (click)="moveCoordinate([1, 0, 0, 0])">
                 <i class="fa-solid fa-arrow-right"></i>
               </button>
             </div>
             <div class="flexed">
-              <button class="toolsBtn">
+              <button class="toolsBtn" (click)="moveCoordinate([0, -1, 0, 0])">
                 <i class="fa-solid fa-arrow-down"></i>
               </button>
             </div>
@@ -102,7 +102,7 @@
           <!-- the vertical arrows -->
           <div class="flex flex-col gap-2">
             <div class="flex gap-2">
-              <button class="toolsBtn">
+              <button class="toolsBtn" (click)="moveCoordinate([0, 0, 1, 0])">
                 <i class="fa-solid fa-arrow-up"></i>
               </button>
               <button
@@ -127,7 +127,7 @@
               </button>
             </div>
             <div class="flex gap-2">
-              <button class="toolsBtn">
+              <button class="toolsBtn" (click)="moveCoordinate([0, 0, -1, 0])">
                 <i class="fa-solid fa-arrow-down"></i>
               </button>
               <button
@@ -141,13 +141,45 @@
           <div
             class="px-3 py-1 bg-gray-100 dark:bg-background w-fit rounded-md flex gap-3 md:ml-3 col-span-2"
           >
-            <button class="activeBarBtn">0.1</button>
+            <button
+              (click)="update_xyzPrecision(0.1)"
+              [ngClass]="{
+                activeBarBtn: xyzPrecision === 0.1,
+                'hover:text-primary': xyzPrecision !== 0.1
+              }"
+            >
+              0.1
+            </button>
             |
-            <button class="cursor-pointer hover:text-primary">1</button>
+            <button
+              (click)="update_xyzPrecision(1)"
+              [ngClass]="{
+                activeBarBtn: xyzPrecision === 1,
+                'hover:text-primary': xyzPrecision !== 1
+              }"
+            >
+              1
+            </button>
             |
-            <button class="cursor-pointer hover:text-primary">10</button>
+            <button
+              (click)="update_xyzPrecision(10)"
+              [ngClass]="{
+                activeBarBtn: xyzPrecision === 10,
+                'hover:text-primary': xyzPrecision !== 10
+              }"
+            >
+              10
+            </button>
             |
-            <button class="cursor-pointer hover:text-primary">100</button>
+            <button
+              (click)="update_xyzPrecision(100)"
+              [ngClass]="{
+                activeBarBtn: xyzPrecision === 100,
+                'hover:text-primary': xyzPrecision !== 100
+              }"
+            >
+              100
+            </button>
           </div>
         </div>
         <div class="grid grid-cols-1 gap-2">
@@ -172,6 +204,7 @@
                 >
               </label>
               <button
+                (click)="moveCoordinate([0, 0, 0, -1])"
                 class="border-2 h-11 px-2 border-secondary rounded-md bg-secondary text-primary cursor-pointer hover:bg-background hover:text-secondary dark:bg-primary dark:text-secondary dark:hover:bg-secondary dark:hover:text-primary dark:border-2 dark:border-primary"
               >
                 RETRACT
@@ -196,6 +229,7 @@
                 >
               </label>
               <button
+                (click)="moveCoordinate([0, 0, 0, 1])"
                 class="border-2 h-11 px-2 border-secondary rounded-md bg-secondary text-primary cursor-pointer hover:bg-background hover:text-secondary dark:bg-primary dark:text-secondary dark:hover:bg-secondary dark:hover:text-primary dark:border-2 dark:border-primary"
               >
                 EXTRUDE
@@ -203,15 +237,47 @@
             </div>
           </div>
           <div
-            class="px-3 py-1 bg-gray-100 w-fit rounded-md flex gap-3 md:ml-3 dark:bg-background"
+            class="px-3 py-1 bg-gray-100 dark:bg-background w-fit rounded-md flex gap-3 md:ml-3 col-span-2"
           >
-            <button class="activeBarBtn">0.1</button>
+            <button
+              (click)="update_ePrecision(0.1)"
+              [ngClass]="{
+                activeBarBtn: xyzPrecision === 0.1,
+                'hover:text-primary': xyzPrecision !== 0.1
+              }"
+            >
+              0.1
+            </button>
             |
-            <button class="cursor-pointer hover:text-primary">1</button>
+            <button
+              (click)="update_ePrecision(1)"
+              [ngClass]="{
+                activeBarBtn: xyzPrecision === 1,
+                'hover:text-primary': xyzPrecision !== 1
+              }"
+            >
+              1
+            </button>
             |
-            <button class="cursor-pointer hover:text-primary">10</button>
+            <button
+              (click)="update_ePrecision(10)"
+              [ngClass]="{
+                activeBarBtn: xyzPrecision === 10,
+                'hover:text-primary': xyzPrecision !== 10
+              }"
+            >
+              10
+            </button>
             |
-            <button class="cursor-pointer hover:text-primary">100</button>
+            <button
+              (click)="update_ePrecision(100)"
+              [ngClass]="{
+                activeBarBtn: xyzPrecision === 100,
+                'hover:text-primary': xyzPrecision !== 100
+              }"
+            >
+              100
+            </button>
           </div>
         </div>
       </div>
