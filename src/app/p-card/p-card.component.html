@@ -52,7 +52,7 @@
 
     <!-- progress bar -->
 
-    @if (progress == 0) {
+    @if (progress == 0 || printer.status.toLowerCase() == "idle") {
     <div class="w-full h-5 bg-gray-400 text-secondary mt-5 rounded-sm flexed">
       idle
     </div>
