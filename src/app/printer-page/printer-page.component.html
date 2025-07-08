@@ -40,6 +40,7 @@
   </div>
 
   <div class="py-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- console -->
     <app-air-hive-card [title]="'Console'">
       <div class="lg:col-span-4">
         <div class="bg-white dark:bg-secondary flex flex-col min-h-80 h-96">
@@ -67,7 +68,7 @@
         </div>
       </div>
     </app-air-hive-card>
-
+    <!-- tools -->
     <app-air-hive-card [title]="'Tools'" class="w-full h-full">
       <div class="flexed gap-3 flex-wrap">
         <div class="grid grid-cols-2 gap-2">
@@ -264,12 +265,48 @@
         </button>
       </div>
     </app-air-hive-card>
-
+    <!-- files -->
     <app-air-hive-card [title]="'Files'">
-      <div
-        class="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center"
-      >
-        <p class="text-gray-500">No files uploaded</p>
+      <div class="flex flex-col justify-center gap-2">
+        <div class="bg-gray-200 h-80 rounded-lg p-5 dark:bg-background">
+          @for (file of files; track $index) {
+          <div
+            class="border-b border-gray-300 dark:border-black/20 p-2 flex justify-between items-center"
+          >
+            <p>{{ file }}</p>
+            <div class="flex gap-3">
+              <button
+                class="p-1 cursor-pointer text-black border-2 hover:text-primary border-primary hover:bg-transparent bg-primary rounded-md"
+                (click)="printFile($index)"
+              >
+                print
+              </button>
+              <button
+                class="p-1 cursor-pointer text-black border-2 hover:text-red-500 border-red-500 hover:bg-transparent bg-red-500 rounded-md"
+              >
+                delete
+              </button>
+            </div>
+          </div>
+          }@empty {
+          <div class="flexed h-full">
+            <p class="text-gray-500">No files uploaded</p>
+          </div>
+          }
+        </div>
+
+        <div class="flexed gap-2">
+          <button
+            class="text-center cursor-pointer py-1 px-2 bg-primary rounded-md self-center border-2 border-primary hover:bg-transparent hover:text-primary dark:text-secondary"
+          >
+            refresh files
+          </button>
+          <button
+            class="text-center cursor-pointer py-1 px-2 hover:bg-primary rounded-md self-center border-2 border-primary text-primary hover:text-text dark:text-secondary"
+          >
+            upload file
+          </button>
+        </div>
       </div>
     </app-air-hive-card>
   </div>

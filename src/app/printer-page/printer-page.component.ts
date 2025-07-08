@@ -1,4 +1,11 @@
-import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { AirHiveCardComponent } from '../air-hive-card/air-hive-card.component';
 import { ActivatedRoute } from '@angular/router';
 import { Printer } from '../interfaces/printer';
@@ -21,6 +28,7 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
   @ViewChild('el') consoleScreen!: ElementRef;
   printer!: Printer;
+  files: string[] = [];
   progress: number = 0;
   elapsedTime: string = '';
   ip: string = '';
@@ -100,9 +108,6 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
           },
         });
     });
-
-    
-    
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -122,6 +127,37 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
         },
       });
     (event.target as HTMLInputElement).value = '';
-    this.consoleScreen.nativeElement.innerHTML += '<p class="mt-2">command sent</p>';
+    this.consoleScreen.nativeElement.innerHTML +=
+      '<p class="mt-2">command sent</p>';
+  }
+
+  refreshFiles() {
+    this.airHiveApiService
+      .getData('/sdcard-files/' + this.ip)
+      .pipe(timeout(5000))
+      .subscribe({
+        next: (data) => {
+          for (let index = 0; index < data.sdcard_files.length; index++) {
+            this.files[index] += data.sdcard_files[index];
+          }
+        },
+        error: (error) => {
+          console.error('Error getting sd card files:', error);
+        },
+      });
+  }
+  printFile(index: number) {
+    this.airHiveApiService
+      .postCommands('/print-file/' + this.ip, {
+        filename: this.files[index],
+      })
+      .subscribe({
+        next: () => {
+          console.log('print command sent, printing file: ', this.files[index]);
+        },
+        error: () => {
+          console.log('error printing file: ', this.files[index]);
+        },
+      });
   }
 }
