@@ -4,6 +4,7 @@ import {
   inject,
   OnDestroy,
   OnInit,
+  viewChild,
   ViewChild,
 } from '@angular/core';
 import { AirHiveCardComponent } from '../air-hive-card/air-hive-card.component';
@@ -35,6 +36,10 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
   progress: number = 0;
   elapsedTime: string = '';
   ip: string = '';
+  fileInput = viewChild.required<ElementRef<HTMLInputElement>>('fileInput');
+  isUploading = false;
+  uploadStatus: 'success' | 'error' | null = null;
+  uploadMessage = '';
 
   constructor(private route: ActivatedRoute) {
     this.route.paramMap.subscribe((params) => {
@@ -243,5 +248,52 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
           console.log(err);
         },
       });
+  }
+  triggerFileInput() {
+    this.fileInput().nativeElement.click();
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const filename = file.name;
+      const filepath = event.target.value;
+
+      // Start upload immediately after file selection
+      this.uploadFile(filename, filepath);
+    }
+  }
+
+  uploadFile(filename: string, filepath: string) {
+    this.isUploading = true;
+    this.uploadStatus = null;
+
+    this.airHiveApiService
+      .postCommands('/upload-to-sdcard/' + this.ip, {
+        filename: filename,
+        filepath: filepath,
+      })
+      .subscribe({
+        next: (response) => {
+          console.log('Upload successful', response);
+          this.isUploading = false;
+          this.uploadStatus = 'success';
+          this.uploadMessage = `File "${filename}" uploaded successfully!`;
+          this.resetFileInput();
+        },
+        error: (error) => {
+          console.error('Upload failed', error);
+          this.isUploading = false;
+          this.uploadStatus = 'error';
+          this.uploadMessage = `Upload failed: ${
+            error.message || 'Unknown error'
+          }`;
+          this.resetFileInput();
+        },
+      });
+  }
+
+  resetFileInput() {
+    this.fileInput().nativeElement.value = '';
   }
 }

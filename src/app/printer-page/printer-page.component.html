@@ -402,11 +402,20 @@
           >
             refresh files
           </button>
-          <!-- <button
+          <button
+            (click)="triggerFileInput()"
+            [disabled]="isUploading"
             class="text-center cursor-pointer py-1 px-2 hover:bg-primary rounded-md self-center border-2 border-primary text-primary hover:text-text dark:text-secondary"
           >
-            upload file
-          </button> -->
+            {{ isUploading ? "Uploading..." : "Upload File" }}
+          </button>
+          <input
+            #fileInput
+            type="file"
+            (change)="onFileSelected($event)"
+            accept=".gcode"
+            style="display: none"
+          />
         </div>
       </div>
     </app-air-hive-card>
