@@ -4,8 +4,38 @@
     <p class="text-3xl">Statics</p>
     <div class="p-3 md:flex justify-between items-center">
       <div class="text-sm lg:text-md">
-        <p>extruder: {{ printer.hotend_temperature }}°C</p>
-        <p>heat bed: {{ printer.heatbed_temperature }}°C</p>
+        <div class="flexed">
+          <p>Extruder: {{ printer.hotend_temperature }}°C /</p>
+          <label for="text" class="relative">
+            <input
+              type="number"
+              class="ml-1 peer p-1 w-16 rounded-sm bg-background sm:text-sm outline-0 text-secondary dark:text-primary"
+              value="0"
+              (keydown.enter)="editHeat('hotend', $event)"
+            />
+
+            <span
+              class="absolute right-1 top-1 text-secondary/70 dark:text-primary/70"
+              >°C</span
+            >
+          </label>
+        </div>
+        <div class="flex items-center mt-2">
+          <p>Heat bed: {{ printer.heatbed_temperature }}°C /</p>
+          <label for="text" class="relative">
+            <input
+              type="number"
+              class="ml-1 peer p-1 w-16 rounded-sm bg-background sm:text-sm outline-0 text-secondary dark:text-primary"
+              value="0"
+              (keydown.enter)="editHeat('bed', $event)"
+            />
+
+            <span
+              class="absolute right-1 top-1 text-secondary/70 dark:text-primary/70"
+              >°C</span
+            >
+          </label>
+        </div>
         <div class="p-1 bg-background rounded-md w-fit mt-1">
           @if (printer.status.toLowerCase() == 'printing') {
           <div class="text-green-500 w-fit flexed gap-1">
@@ -13,7 +43,7 @@
             <p class="text-lg">{{ printer.status }}</p>
           </div>
           }@else if (printer.status.toLowerCase() == 'idle') {
-          <div class="text-gray-500 w-fit flexed gap-1">
+          <div class="text-gray-500 w-fit flexed gap-1 dark:text-gray-200">
             <i class="text-[8px] fa-solid fa-circle"></i>
             <p class="text-lg">{{ printer.status }}</p>
           </div>

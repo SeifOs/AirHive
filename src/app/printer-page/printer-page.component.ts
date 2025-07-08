@@ -225,4 +225,21 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
         },
       });
   }
+  editHeat(newType: string, event: Event) {
+    const newTarget = (event.target as HTMLInputElement).value;
+
+    this.airHiveApiService
+      .postCommands('/set-temperature/' + this.ip, {
+        type: newType,
+        target: newTarget,
+      })
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+  }
 }
