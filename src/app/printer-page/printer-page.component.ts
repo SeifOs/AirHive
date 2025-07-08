@@ -264,21 +264,23 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  uploadFile(filename: string, filepath: string) {
+  uploadFile(uploadFilename: string, uploadFilepath: string) {
     this.isUploading = true;
     this.uploadStatus = null;
 
+    console.log(uploadFilename, uploadFilepath);
+
     this.airHiveApiService
       .postCommands('/upload-to-sdcard/' + this.ip, {
-        filename: filename,
-        filepath: filepath,
+        filename: uploadFilename,
+        filepath: uploadFilepath,
       })
       .subscribe({
         next: (response) => {
           console.log('Upload successful', response);
           this.isUploading = false;
           this.uploadStatus = 'success';
-          this.uploadMessage = `File "${filename}" uploaded successfully!`;
+          this.uploadMessage = `File "${uploadFilename}" uploaded successfully!`;
           this.resetFileInput();
         },
         error: (error) => {
