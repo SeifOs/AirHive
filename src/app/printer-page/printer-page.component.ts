@@ -265,10 +265,12 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
     this.isUploading = true;
     this.uploadStatus = null;
 
+    const formData = new FormData();
+    formData.append('file', uploadFile);
+    formData.append('filename', uploadFile.name);
+
     this.airHiveApiService
-      .postCommands('/upload-file/' + this.ip, {
-        file: uploadFile,
-      })
+      .postCommands('/upload-file/' + this.ip, formData)
       .subscribe({
         next: (response) => {
           console.log('Upload successful', response);
@@ -288,7 +290,6 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
         },
       });
   }
-
   resetFileInput() {
     this.fileInput().nativeElement.value = '';
   }
