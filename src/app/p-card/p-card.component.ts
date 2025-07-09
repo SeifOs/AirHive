@@ -19,6 +19,7 @@ export class PCardComponent implements OnInit {
   progress: number = 0;
   elapsedTime: string = '';
   printing: boolean = false;
+  Printing_file: string = '';
 
   goToPrinter(ip: string) {
     this.router.navigate(['/printerPage', ip]);
@@ -28,27 +29,17 @@ export class PCardComponent implements OnInit {
     // check status initially
     this.airHiveApiService
       .getData('/status/' + this.printer.ip)
-      .pipe(timeout(5000))
+      .pipe(timeout(2000))
       .subscribe({
         next: (data) => {
           this.printer.status = data.status;
           this.progress = data.Progress;
           this.printing = this.printer.status.toLowerCase() == 'printing';
+          this.elapsedTime = data.elapsed_time;
+          this.Printing_file = data.Printing_file;
         },
         error: (error) => {
           console.error('Error updating printer status:', error);
-        },
-      });
-    // get elapsed time initially
-    this.airHiveApiService
-      .getData('/elapsed-time/' + this.printer.ip)
-      .pipe(timeout(5000))
-      .subscribe({
-        next: (data) => {
-          this.elapsedTime = data.elapsed_time;
-        },
-        error: (error) => {
-          console.error('Error getting elapsed time:', error);
         },
       });
 
@@ -56,30 +47,17 @@ export class PCardComponent implements OnInit {
       // check status
       this.airHiveApiService
         .getData('/status/' + this.printer.ip)
-        .pipe(timeout(5000))
+        .pipe(timeout(2000))
         .subscribe({
           next: (data) => {
             this.printer.status = data.status;
             this.progress = data.Progress;
             this.printing = this.printer.status.toLowerCase() == 'printing';
+            this.elapsedTime = data.elapsed_time;
+            this.Printing_file = data.Printing_file;
           },
           error: (error) => {
             console.error('Error updating printer status:', error);
-          },
-        });
-    });
-
-    this.subscription = interval(1000).subscribe(() => {
-      // get elapsed time
-      this.airHiveApiService
-        .getData('/elapsed-time/' + this.printer.ip)
-        .pipe(timeout(5000))
-        .subscribe({
-          next: (data) => {
-            this.elapsedTime = data.elapsed_time;
-          },
-          error: (error) => {
-            console.error('Error getting elapsed time:', error);
           },
         });
     });
