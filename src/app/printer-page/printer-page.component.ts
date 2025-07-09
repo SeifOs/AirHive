@@ -103,7 +103,7 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
           next: (data) => {
             const el = this.consoleScreen.nativeElement;
             for (const msg of data.raw_responses) {
-              this.consoleMessages.push(`<p>${msg}</p>`);
+              this.consoleMessages.push(`${msg}`);
               this.scrollConsoleToBottom();
             }
           },
@@ -154,7 +154,7 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
   scrollConsoleToBottom() {
     setTimeout(() => {
       if (this.consoleScreen) {
-        this.consoleScreen.nativeElement.scrollTop =
+        this.consoleScreen.nativeElement.scrollTop +=
           this.consoleScreen.nativeElement.scrollHeight;
       }
     });
