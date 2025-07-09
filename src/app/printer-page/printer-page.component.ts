@@ -55,12 +55,40 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // fetch data initially
+    this.refreshFiles();
+
+    this.airHiveApiService
+      .getData('/printer-page-data/' + this.ip)
+      .pipe(timeout(5000))
+      .subscribe({
+        next: (data) => {
+          this.printer.heatbed_temperature = data.heatbed_temperature;
+          this.printer.hotend_temperature = data.hotend_temperature;
+          this.printer.status = data.status;
+          this.progress = data.Progress;
+          this.elapsedTime = data.print_elapsed_time;
+          const el = this.consoleScreen.nativeElement;
+          for (const msg of data.raw_responses) {
+            this.consoleMessages.push(`${msg}`);
+            this.scrollConsoleToBottom();
+          }
+          this.printer.x_coordinate = data.X;
+          this.printer.y_coordinate = data.Y;
+          this.printer.z_coordinate = data.Z;
+          this.printer.e_coordinate = data.E;
+        },
+        error: (err) => {
+          console.log('error getting data:', err);
+        },
+      });
+
     this.subscription = interval(2000).subscribe(() => {
       this.refreshFiles();
 
       this.airHiveApiService
         .getData('/printer-page-data/' + this.ip)
-        .pipe(timeout(2000))
+        .pipe(timeout(5000))
         .subscribe({
           next: (data) => {
             this.printer.heatbed_temperature = data.heatbed_temperature;
