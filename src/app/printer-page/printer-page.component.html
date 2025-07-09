@@ -87,6 +87,9 @@
                   </div>
                 </div>
               </div>
+              @for (msg of consoleMessages; track $index) {
+              <p class="mt-2">{{ msg }}</p>
+              }
             </div>
           </div>
           <input

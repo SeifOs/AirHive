@@ -40,6 +40,7 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
   isUploading = false;
   uploadStatus: 'success' | 'error' | null = null;
   uploadMessage = '';
+  consoleMessages: string[] = [];
 
   constructor(private route: ActivatedRoute) {
     this.route.paramMap.subscribe((params) => {
@@ -102,9 +103,9 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
           next: (data) => {
             const el = this.consoleScreen.nativeElement;
             for (const msg of data.raw_responses) {
-              el.innerHTML += `<p>${msg}</p>`;
+              this.consoleMessages.push(`<p>${msg}</p>`);
+              this.scrollConsoleToBottom();
             }
-            el.scrollTop = el.scrollHeight;
           },
           error: (error) => {
             console.error('Error getting raw data:', error);
@@ -139,15 +140,24 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res) => {
           console.log(`command ${command} sent with no problems`);
+          this.consoleMessages.push(`command ${command} sent`);
+          this.scrollConsoleToBottom();
         },
         error: (err) => {
           console.log('error sending the command: ', err);
+          this.consoleMessages.push(`error sending command: ${command}`);
+          this.scrollConsoleToBottom();
         },
       });
     (event.target as HTMLInputElement).value = '';
-    this.consoleScreen.nativeElement.innerHTML += `<p class="mt-2">command ${command} sent</p>`;
-    this.consoleScreen.nativeElement.scrollTop =
-      this.consoleScreen.nativeElement.scrollHeight;
+  }
+  scrollConsoleToBottom() {
+    setTimeout(() => {
+      if (this.consoleScreen) {
+        this.consoleScreen.nativeElement.scrollTop =
+          this.consoleScreen.nativeElement.scrollHeight;
+      }
+    });
   }
 
   refreshFiles() {
