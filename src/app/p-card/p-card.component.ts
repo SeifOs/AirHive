@@ -25,7 +25,34 @@ export class PCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subscription = interval(3000).subscribe(() => {
+    // check status initially
+    this.airHiveApiService
+      .getData('/status/' + this.printer.ip)
+      .pipe(timeout(5000))
+      .subscribe({
+        next: (data) => {
+          this.printer.status = data.status;
+          this.progress = data.Progress;
+          this.printing = this.printer.status.toLowerCase() == 'printing';
+        },
+        error: (error) => {
+          console.error('Error updating printer status:', error);
+        },
+      });
+    // get elapsed time initially
+    this.airHiveApiService
+      .getData('/elapsed-time/' + this.printer.ip)
+      .pipe(timeout(5000))
+      .subscribe({
+        next: (data) => {
+          this.elapsedTime = data.elapsed_time;
+        },
+        error: (error) => {
+          console.error('Error getting elapsed time:', error);
+        },
+      });
+
+    this.subscription = interval(1000).subscribe(() => {
       // check status
       this.airHiveApiService
         .getData('/status/' + this.printer.ip)
