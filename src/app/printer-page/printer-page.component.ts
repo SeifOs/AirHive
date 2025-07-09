@@ -100,10 +100,10 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
         .pipe(timeout(5000))
         .subscribe({
           next: (data) => {
-            for (let index = 0; index < data.raw_responses.length; index++) {
-              this.consoleScreen.nativeElement.innerHTML += `<p>${data.raw_responses[index]}</p>`;
-            }
             const el = this.consoleScreen.nativeElement;
+            for (const msg of data.raw_responses) {
+              el.innerHTML += `<p>${msg}</p>`;
+            }
             el.scrollTop = el.scrollHeight;
           },
           error: (error) => {
