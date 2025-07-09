@@ -54,7 +54,9 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription = interval(5000).subscribe(() => {
+    this.subscription = interval(2000).subscribe(() => {
+      this.refreshFiles();
+      // temp data
       this.airHiveApiService
         .getData('/temperature/' + this.ip)
         .pipe(timeout(5000))
@@ -64,13 +66,9 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
             this.printer.hotend_temperature = data.hotend_temperature;
           },
           error: (err) => {
-            console.log('error:', err);
+            console.log('error getting temp:', err);
           },
         });
-
-      this.refreshFiles();
-    });
-    this.subscription = interval(5000).subscribe(() => {
       // check status
       this.airHiveApiService
         .getData('/status/' + this.ip)
@@ -84,8 +82,6 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
             console.error('Error updating printer status:', error);
           },
         });
-    });
-    this.subscription = interval(5000).subscribe(() => {
       // get elapsed time
       this.airHiveApiService
         .getData('/elapsed-time/' + this.ip)
@@ -98,9 +94,7 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
             console.error('Error getting elapsed time:', error);
           },
         });
-    });
-    this.subscription = interval(5000).subscribe(() => {
-      // get elapsed time
+      // get raw data
       this.airHiveApiService
         .getData('/raw-responses/' + this.ip)
         .pipe(timeout(5000))
@@ -109,13 +103,13 @@ export class PrinterPageComponent implements OnInit, OnDestroy {
             for (let index = 0; index < data.raw_responses.length; index++) {
               this.consoleScreen.nativeElement.innerHTML += `<p>${data.raw_responses[index]}</p>`;
             }
+            const el = this.consoleScreen.nativeElement;
+            el.scrollTop = el.scrollHeight;
           },
           error: (error) => {
-            console.error('Error getting elapsed time:', error);
+            console.error('Error getting raw data:', error);
           },
         });
-    });
-    this.subscription = interval(5000).subscribe(() => {
       // get coordinates
       this.airHiveApiService
         .getData('/axis-coordinates/' + this.ip)
